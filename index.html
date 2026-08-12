@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>蓝鹰侦探局 · BETI特工潜能测试</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: linear-gradient(160deg, #0a1f2e 0%, #0b2b3f 40%, #0f3b55 100%);
+      font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+      min-height: 100vh; display: flex; justify-content: center; align-items: center;
+      padding: 20px; margin: 0; background-attachment: fixed;
+    }
+    body::before {
+      content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at 20% 30%, rgba(0,180,255,0.06) 0%, transparent 30%),
+                  radial-gradient(circle at 80% 70%, rgba(0,150,210,0.1) 0%, transparent 40%);
+      pointer-events: none;
+    }
+    .container {
+      width: 100%; max-width: 600px; background: rgba(246,250,255,0.95);
+      backdrop-filter: blur(20px); border-radius: 40px;
+      box-shadow: 0 30px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(100,180,255,0.2);
+      padding: 28px 22px 32px; display: flex; flex-direction: column;
+      position: relative; z-index: 1; border: 1px solid rgba(75,160,230,0.3);
+    }
+    .detective-badge {
+      position: absolute; top: -15px; right: 25px; background: #0f3b55;
+      color: #ffd966; font-size: 12px; padding: 5px 14px; border-radius: 20px;
+      letter-spacing: 2px; font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      border: 1px solid #6eb5e0;
+    }
+    .header { text-align: center; margin-bottom: 8px; }
+    .logo-row { font-size: 44px; letter-spacing: 4px; filter: drop-shadow(0 6px 8px rgba(0,100,180,0.3)); margin-bottom: 4px; }
+    .title {
+      font-size: 28px; font-weight: 800;
+      background: linear-gradient(180deg, #0b3550 0%, #1d5375 80%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      letter-spacing: 2px; margin: 6px 0 2px;
+    }
+    .subtitle {
+      color: #3e6b87; font-weight: 600; font-size: 15px;
+      border-bottom: 1px dashed #b8d3e9; padding-bottom: 12px; margin-bottom: 8px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .mode-select { display: flex; flex-direction: column; gap: 16px; margin: 24px 0; }
+    .mode-btn {
+      background: linear-gradient(135deg, #0b3d57, #176087);
+      border: none; border-radius: 24px; padding: 18px 22px;
+      color: white; font-weight: 700; font-size: 18px; cursor: pointer;
+      transition: 0.25s; display: flex; align-items: center; gap: 14px;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.3); border: 1px solid rgba(255,215,0,0.3);
+    }
+    .mode-btn:hover { transform: translateY(-3px); box-shadow: 0 18px 32px rgba(0,0,0,0.5); border-color: #ffd966; }
+    .mode-btn .mode-icon { font-size: 32px; flex-shrink: 0; width: 40px; text-align: center; }
+    .mode-btn .mode-text { flex: 1; text-align: center; }
+    .mode-btn .mode-title { font-size: 22px; margin-bottom: 4px; }
+    .mode-btn .mode-desc { font-size: 14px; opacity: 0.9; font-weight: 400; }
+    .mode-btn .arrow { font-size: 24px; flex-shrink: 0; }
+    .progress-section { margin: 8px 0 14px; }
+    .progress-bar-bg { height: 10px; background: #d4e1f0; border-radius: 20px; overflow: hidden; width: 100%; box-shadow: inset 0 1px 3px rgba(0,0,0,0.2); }
+    .progress-fill { height: 10px; background: linear-gradient(90deg, #1f6e9c, #3498c7); width: 0%; border-radius: 20px; transition: width 0.3s ease; box-shadow: 0 0 12px #2e95d4; }
+    .question-counter { display: flex; justify-content: space-between; color: #1e4868; font-size: 14px; margin-top: 8px; font-weight: 600; }
+    .card {
+      background: #ffffff; border-radius: 32px; padding: 24px 20px;
+      box-shadow: 0 12px 28px rgba(9,45,75,0.12); margin: 6px 0 16px;
+      border: 1px solid #e7f0fa; position: relative;
+    }
+    .card::before { content: "🔍"; position: absolute; top: -12px; left: 20px; font-size: 22px; opacity: 0.6; }
+    .question-text { font-size: 20px; font-weight: 700; color: #0a3144; margin: 8px 0 20px; line-height: 1.5; text-align: center; }
+    .options { display: flex; flex-direction: column; gap: 10px; }
+    .option-btn {
+      background: #f4f9ff; border: 1.5px solid #d2e2f5; border-radius: 16px;
+      padding: 13px 16px; font-size: 15px; font-weight: 500; color: #123d52;
+      text-align: left; transition: all 0.2s ease; cursor: pointer;
+      display: flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, #f8fcff, #f0f6fe);
+    }
+    .option-btn:hover { background: #e1f0ff; border-color: #2980b9; transform: translateY(-2px); box-shadow: 0 8px 16px -8px rgba(0,100,180,0.3); }
+    .option-btn.selected { background: #daefff; border-color: #1e6fa5; box-shadow: 0 0 0 2px rgba(30,120,180,0.3); }
+    .option-letter {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: linear-gradient(145deg, #1b5470, #23668a); color: white;
+      font-weight: 700; width: 28px; height: 28px; border-radius: 10px; font-size: 14px; flex-shrink: 0;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 14px; }
+    .nav-btn { background: #eef4fa; border: 1px solid #b1ccdf; padding: 10px 24px; border-radius: 40px; font-weight: 600; color: #13455f; cursor: pointer; font-size: 15px; display: flex; align-items: center; gap: 4px; transition: 0.2s; }
+    .nav-btn:disabled { opacity: 0.4; pointer-events: none; background: #e0e8ef; }
+    .nav-btn:hover:not(:disabled) { background: #d5ebff; border-color: #1e6fa5; }
+    .submit-area { margin-top: 20px; display: flex; justify-content: center; }
+    .primary-btn {
+      background: linear-gradient(115deg, #0b3d57, #176087); border: none;
+      padding: 16px 38px; border-radius: 50px; color: white; font-weight: 700; font-size: 17px;
+      letter-spacing: 1.5px; cursor: pointer; box-shadow: 0 10px 20px -6px rgba(7,60,90,0.5);
+      transition: all 0.25s; display: flex; align-items: center; gap: 8px;
+      border: 1px solid rgba(255,215,0,0.4);
+    }
+    .primary-btn:hover { background: linear-gradient(115deg, #0f4d6e, #1f74a2); transform: translateY(-2px); box-shadow: 0 16px 26px -10px #083049; }
+    .result-card { text-align: center; }
+    .result-badge { font-size: 55px; margin-bottom: 6px; }
+    .dept-name { font-size: 32px; font-weight: 800; color: #06263a; margin: 8px 0 6px; }
+    .dept-desc { color: #1f445e; font-size: 16px; margin: 14px 0; line-height: 1.7; background: #edf5fd; padding: 18px; border-radius: 24px; text-align: left; border-left: 4px solid #1b6b93; }
+    .score-list { text-align: left; margin: 18px 0 8px; background: #f4fafd; border-radius: 20px; padding: 14px 16px; }
+    .score-row { display: flex; align-items: center; justify-content: space-between; margin: 10px 0; font-weight: 500; }
+    .dept-label { width: 130px; color: #0a3349; font-weight: 600; }
+    .bar-bg { flex: 1; height: 10px; background: #d4e4f3; border-radius: 20px; margin: 0 12px; overflow: hidden; }
+    .bar-fill { height: 10px; background: linear-gradient(90deg, #1a658b, #379fd0); border-radius: 20px; width: 0%; }
+    .restart-btn { background: white; border: 1px solid #155b7e; color: #155b7e; margin-top: 18px; padding: 12px 28px; border-radius: 30px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; }
+    .restart-btn:hover { background: #d9eeff; }
+    .radar-container { display: flex; justify-content: center; margin: 20px 0; }
+    canvas { background: #f8fbff; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .tip-line { text-align: center; color: #6b8ca0; font-size: 13px; margin-top: 8px; }
+    .disclaimer { text-align: center; color: #8aa3b8; font-size: 12px; margin-top: 16px; }
+    @media (max-width: 450px) {
+      .container { padding: 20px 16px; }
+      .option-btn { padding: 12px 14px; font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="appContainer"></div>
+<script>
+(function() {
+  // ==================== 部门定义 ====================
+  const DEPARTMENTS = {
+    edit: { name: '采编部', emoji: '📝', desc: '你喜欢用文字把世界理顺。采编部需要的就是这种把零散信息编织成故事、把复杂事实讲清楚的能力。', traits: '文字倾向强、善于梳理逻辑' },
+    photo: { name: '摄影部', emoji: '📷', desc: '你对画面和瞬间有天然的敏感。摄影部需要的就是这种用镜头捕捉细节、用光影讲述故事的天赋。', traits: '画面敏感、观察入微' },
+    video: { name: '影像部（DV部）', emoji: '🎬', desc: '你喜欢让一切动起来。影像部需要的就是这种把画面、声音、节奏组合成完整叙事的热情。', traits: '动态表达、节奏感好' },
+    draw: { name: '视觉中心·手绘部', emoji: '🎨', desc: '你的手和想象力配合默契。手绘部需要的就是这种用线条和色彩把脑内画面搬进现实的能力。', traits: '手工创作欲强、想象力丰富' },
+    tech: { name: '视觉中心·技术部', emoji: '💻', desc: '你喜欢用软件和数字工具进行视觉创作。技术部需要的就是这种用PS、AI等软件将想法变成平面作品的能力。', traits: '软件创作、视觉执行、细节控' },
+    office: { name: '综合办公室（秘书部）', emoji: '📋', desc: '你天生就有让一切井井有条的能力。综合办公室需要的就是这种统筹全局、协调各方的可靠品格。', traits: '秩序感强、善于沟通协调' },
+    ops: { name: '网运部（网络运营部）', emoji: '📡', desc: '你对平台和数据有天然的兴趣。网运部需要的就是这种让信息精准触达、让活动被更多人看见的能力。', traits: '传播意识强、对数据敏感' }
+  };
+
+  // ==================== 性格维度（雷达图） ====================
+  const TRAIT_NAMES = {
+    word: '文字梳理',
+    visual: '画面敏感',
+    motion: '动态表达',
+    craft: '手工创造',
+    digital: '软件创作',
+    organ: '秩序规划',
+    media: '传播分享'
+  };
+
+  // 部门映射（加权）
+  const DEPT_MAPPING = {
+    edit:   { word: 4, organ: 2, media: 1, visual: 1 },
+    photo:  { visual: 4, motion: 1, word: 1, craft: 1 },
+    video:  { motion: 4, visual: 2, digital: 1, organ: 1 },
+    draw:   { craft: 4, visual: 3, motion: 1 },
+    tech:   { digital: 4, visual: 3, craft: 1 },
+    office: { organ: 4, word: 2, media: 1, digital: 1 },
+    ops:    { media: 4, digital: 2, organ: 1, word: 1 }
+  };
+
+  // ==================== 选择题池（70题，已加emoji） ====================
+  const choicePool = [
+    { question: "🖥️ 你的电脑桌面通常是什么状态？", options: [
+      { text: "文件分门别类，井井有条，强迫症般的整洁", scores: { organ: 2 } },
+      { text: "定期清理，只保留最常用的几个图标", scores: { digital: 2 } },
+      { text: "铺满了各种文件，但我知道它们在哪", scores: { word: 2 } },
+      { text: "一片混乱的数字废墟，但这是我的灵感温床", scores: { craft: 2 } }
+    ]},
+    { question: "🤔 处理一个复杂任务时，你通常会？", options: [
+      { text: "先写个详细计划，按部就班执行", scores: { organ: 2 } },
+      { text: "先搜教程和工具，边学边做", scores: { digital: 2 } },
+      { text: "先跟朋友讨论，理清思路", scores: { media: 2 } },
+      { text: "直接动手试，错了再调整", scores: { motion: 2 } }
+    ]},
+    { question: "📱 你的手机相册里最多的是什么？", options: [
+      { text: "各种截图和备忘录", scores: { word: 2 } },
+      { text: "随手拍的照片，很多都模糊了", scores: { visual: 2 } },
+      { text: "下载的图片和设计灵感", scores: { craft: 2 } },
+      { text: "视频和动图", scores: { motion: 2 } }
+    ]},
+    { question: "🛋️ 你更喜欢的休闲方式是？", options: [
+      { text: "看一本好书，沉浸在文字里", scores: { word: 2 } },
+      { text: "看电影或刷剧，欣赏画面和故事", scores: { motion: 2 } },
+      { text: "逛美术馆或摄影展", scores: { visual: 2 } },
+      { text: "研究新软件或小工具", scores: { digital: 2 } }
+    ]},
+    { question: "👥 你的朋友觉得你是一个怎样的人？", options: [
+      { text: "靠谱，但有时太较真", scores: { organ: 2 } },
+      { text: "有创意，但有点天马行空", scores: { craft: 2 } },
+      { text: "消息灵通，但偶尔爱八卦", scores: { media: 2 } },
+      { text: "心思细腻，但容易想太多", scores: { word: 2 } }
+    ]},
+    { question: "🗒️ 你通常怎么记住一个重要的事情？", options: [
+      { text: "写下来，列在待办清单上", scores: { organ: 2 } },
+      { text: "拍张照片或截图存下来", scores: { visual: 2 } },
+      { text: "设个提醒或日历事件", scores: { digital: 2 } },
+      { text: "脑子里过一遍，但有时候会忘", scores: { motion: 2 } }
+    ]},
+    { question: "😫 当你遇到压力时，你倾向于？", options: [
+      { text: "整理东西，让环境恢复秩序", scores: { organ: 2 } },
+      { text: "出去走走，拍拍照散心", scores: { visual: 2 } },
+      { text: "听音乐或看视频转移注意力", scores: { motion: 2 } },
+      { text: "在网上冲浪，看看别人怎么应对", scores: { media: 2 } }
+    ]},
+    { question: "💬 你更喜欢的社交方式是？", options: [
+      { text: "一对一深度聊天", scores: { word: 2 } },
+      { text: "一起参加活动，拍照留念", scores: { visual: 2 } },
+      { text: "一起做手工或创作", scores: { craft: 2 } },
+      { text: "在群里聊天，分享有趣内容", scores: { media: 2 } }
+    ]},
+    { question: "🛍️ 你购买一件东西时，最看重？", options: [
+      { text: "实用性和性价比", scores: { organ: 2 } },
+      { text: "外观设计和颜值", scores: { visual: 2 } },
+      { text: "品牌和口碑，看评价", scores: { media: 2 } },
+      { text: "功能是否强大，可玩性", scores: { digital: 2 } }
+    ]},
+    { question: "📖 你的学习风格更接近？", options: [
+      { text: "喜欢做笔记，整理知识点", scores: { word: 2 } },
+      { text: "喜欢看视频或图解，视觉化学习", scores: { visual: 2 } },
+      { text: "喜欢动手实践，做中学", scores: { craft: 2 } },
+      { text: "喜欢和同学讨论，合作学习", scores: { media: 2 } }
+    ]},
+    { question: "❤️ 你更常使用哪种方式表达情感？", options: [
+      { text: "写小作文或日记", scores: { word: 2 } },
+      { text: "画下来或做点小东西", scores: { craft: 2 } },
+      { text: "直接说出来或发语音", scores: { media: 2 } },
+      { text: "用行动表达，比如送礼物", scores: { organ: 2 } }
+    ]},
+    { question: "😅 你觉得自己最大的缺点是？", options: [
+      { text: "拖延，计划很好但执行差", scores: { organ: 2 } },
+      { text: "完美主义，总是不满意", scores: { visual: 2 } },
+      { text: "三分钟热度，难以坚持", scores: { motion: 2 } },
+      { text: "想得太多，做得太少", scores: { word: 2 } }
+    ]},
+    { question: "🏢 你更喜欢哪种工作环境？", options: [
+      { text: "安静整洁，有自己独立的空间", scores: { organ: 2 } },
+      { text: "有视觉刺激，墙上贴满海报", scores: { visual: 2 } },
+      { text: "有各种工具和设备，可以随时动手", scores: { craft: 2 } },
+      { text: "有网络和电脑，可以随时获取信息", scores: { digital: 2 } }
+    ]},
+    { question: "💖 你更可能被哪种人吸引？", options: [
+      { text: "有想法，文笔好的人", scores: { word: 2 } },
+      { text: "有品味，会拍照的人", scores: { visual: 2 } },
+      { text: "有才华，会创作的人", scores: { craft: 2 } },
+      { text: "有魅力，善于社交的人", scores: { media: 2 } }
+    ]},
+    { question: "📅 你通常如何安排周末？", options: [
+      { text: "提前规划好要做什么，按计划执行", scores: { organ: 2 } },
+      { text: "说走就走，随性而为", scores: { motion: 2 } },
+      { text: "宅在家，做自己喜欢的小事", scores: { craft: 2 } },
+      { text: "和朋友约，参加各种活动", scores: { media: 2 } }
+    ]},
+    { question: "💰 你更愿意为哪种内容付费？", options: [
+      { text: "电子书或深度文章", scores: { word: 2 } },
+      { text: "修图软件或滤镜", scores: { visual: 2 } },
+      { text: "视频平台会员", scores: { motion: 2 } },
+      { text: "生产力工具或效率软件", scores: { digital: 2 } }
+    ]},
+    { question: "🐱 你觉得自己更像哪种动物？", options: [
+      { text: "蜜蜂：勤劳有条理", scores: { organ: 2 } },
+      { text: "猫：敏感爱干净，有点高冷", scores: { visual: 2 } },
+      { text: "猴子：好动，爱尝试新事物", scores: { craft: 2 } },
+      { text: "海豚：喜欢社交，乐于分享", scores: { media: 2 } }
+    ]},
+    { question: "✈️ 你更喜欢的旅行方式？", options: [
+      { text: "做好攻略，按计划打卡", scores: { organ: 2 } },
+      { text: "随意走走，拍照记录", scores: { visual: 2 } },
+      { text: "体验当地手工和文化", scores: { craft: 2 } },
+      { text: "跟团或结伴，热闹有趣", scores: { media: 2 } }
+    ]},
+    { question: "🧩 你遇到一个新问题时，第一反应？", options: [
+      { text: "查找相关资料，深入分析", scores: { word: 2 } },
+      { text: "画个图或做思维导图理清", scores: { visual: 2 } },
+      { text: "动手试验，不断尝试", scores: { craft: 2 } },
+      { text: "问别人，看有没有现成方案", scores: { media: 2 } }
+    ]},
+    { question: "🎬 你更喜欢哪种类型的电影？", options: [
+      { text: "剧情深刻，对话精彩", scores: { word: 2 } },
+      { text: "画面唯美，视觉震撼", scores: { visual: 2 } },
+      { text: "节奏紧凑，动作刺激", scores: { motion: 2 } },
+      { text: "创意独特，天马行空", scores: { craft: 2 } }
+    ]},
+    { question: "📱 你的社交平台使用习惯？", options: [
+      { text: "很少发，但会认真写长文", scores: { word: 2 } },
+      { text: "爱发照片，记录生活", scores: { visual: 2 } },
+      { text: "爱发视频，分享动态", scores: { motion: 2 } },
+      { text: "爱转发和评论，参与讨论", scores: { media: 2 } }
+    ]},
+    { question: "🎮 你更擅长哪种游戏？", options: [
+      { text: "策略类，需要规划和思考", scores: { organ: 2 } },
+      { text: "解谜类，需要观察和逻辑", scores: { word: 2 } },
+      { text: "动作类，需要反应和节奏", scores: { motion: 2 } },
+      { text: "创造类，需要想象和设计", scores: { craft: 2 } }
+    ]},
+    { question: "🏠 你通常如何整理你的物品？", options: [
+      { text: "按类别和功能分门别类，标签明确", scores: { organ: 2 } },
+      { text: "按颜色或外观摆放，追求美感", scores: { visual: 2 } },
+      { text: "随手放，但自己能找到", scores: { craft: 2 } },
+      { text: "不太整理，乱中有序", scores: { motion: 2 } }
+    ]},
+    { question: "🎁 你更喜欢哪种类型的礼物？", options: [
+      { text: "实用的，能解决问题的", scores: { organ: 2 } },
+      { text: "有设计感的，好看就行", scores: { visual: 2 } },
+      { text: "有创意的手工作品", scores: { craft: 2 } },
+      { text: "热门款，大家都在用的", scores: { media: 2 } }
+    ]},
+    { question: "📰 你更常使用哪种方式获取新闻或信息？", options: [
+      { text: "读深度报道或文章", scores: { word: 2 } },
+      { text: "看图解或信息图", scores: { visual: 2 } },
+      { text: "看短视频或直播", scores: { motion: 2 } },
+      { text: "刷社交媒体，看大家讨论", scores: { media: 2 } }
+    ]},
+    { question: "👥 你觉得自己在团队中更接近？", options: [
+      { text: "组织者：安排流程，协调资源", scores: { organ: 2 } },
+      { text: "创意者：出点子，提想法", scores: { craft: 2 } },
+      { text: "执行者：动手做，完成任务", scores: { digital: 2 } },
+      { text: "联络者：沟通交流，调动气氛", scores: { media: 2 } }
+    ]},
+    { question: "⏳ 你更喜欢哪种工作节奏？", options: [
+      { text: "稳定有序，按部就班", scores: { organ: 2 } },
+      { text: "灵活自由，不受约束", scores: { motion: 2 } },
+      { text: "慢工出细活，精雕细琢", scores: { craft: 2 } },
+      { text: "多任务并行，快速切换", scores: { digital: 2 } }
+    ]},
+    { question: "⭐ 你更在意别人的哪种评价？", options: [
+      { text: "能力强，做事靠谱", scores: { organ: 2 } },
+      { text: "有品位，有审美", scores: { visual: 2 } },
+      { text: "有创意，与众不同", scores: { craft: 2 } },
+      { text: "人缘好，受欢迎", scores: { media: 2 } }
+    ]},
+    { question: "🤔 你通常如何做决定？", options: [
+      { text: "列出利弊，理性分析", scores: { word: 2 } },
+      { text: "凭直觉和感觉", scores: { visual: 2 } },
+      { text: "看别人怎么做，参考经验", scores: { media: 2 } },
+      { text: "试一下再说，不行再改", scores: { motion: 2 } }
+    ]},
+    { question: "📓 你更喜欢的日记类型？", options: [
+      { text: "文字为主，记录心情和思考", scores: { word: 2 } },
+      { text: "图文并茂，贴上照片和票根", scores: { visual: 2 } },
+      { text: "手绘手帐，画画贴纸", scores: { craft: 2 } },
+      { text: "电子记录，用App管理", scores: { digital: 2 } }
+    ]},
+    { question: "🎨 你更喜欢以下哪种活动？", options: [
+      { text: "参加读书会或写作工作坊", scores: { word: 2 } },
+      { text: "去美术馆或摄影展", scores: { visual: 2 } },
+      { text: "参加DIY手作课程", scores: { craft: 2 } },
+      { text: "参加线上互动活动或挑战", scores: { media: 2 } }
+    ]},
+    { question: "📚 你更倾向于用哪种方式学习新技能？", options: [
+      { text: "阅读专业书籍或文章", scores: { word: 2 } },
+      { text: "观看教学视频或图解", scores: { visual: 2 } },
+      { text: "动手实践，从做中学", scores: { craft: 2 } },
+      { text: "报名课程，跟随老师学习", scores: { organ: 2 } }
+    ]},
+    { question: "🎨 你更欣赏哪种艺术形式？", options: [
+      { text: "文学和诗歌", scores: { word: 2 } },
+      { text: "摄影和电影", scores: { visual: 2 } },
+      { text: "绘画和雕塑", scores: { craft: 2 } },
+      { text: "数字艺术和设计", scores: { digital: 2 } }
+    ]},
+    { question: "🌈 你更喜欢哪种颜色搭配？", options: [
+      { text: "黑白灰，简洁", scores: { organ: 2 } },
+      { text: "鲜艳亮丽，充满活力", scores: { motion: 2 } },
+      { text: "柔和温暖，舒服", scores: { word: 2 } },
+      { text: "大胆撞色，有个性", scores: { craft: 2 } }
+    ]},
+    { question: "☀️ 你更倾向于在哪种天气出门？", options: [
+      { text: "晴朗凉爽，适合拍照", scores: { visual: 2 } },
+      { text: "下雨天，有氛围", scores: { word: 2 } },
+      { text: "阴天，不晒不热", scores: { organ: 2 } },
+      { text: "任何天气，看心情", scores: { motion: 2 } }
+    ]},
+    { question: "🎵 你更喜欢哪种音乐风格？", options: [
+      { text: "民谣或抒情，有故事感", scores: { word: 2 } },
+      { text: "古典或纯音乐，有画面感", scores: { visual: 2 } },
+      { text: "电子或摇滚，有节奏感", scores: { motion: 2 } },
+      { text: "流行或嘻哈，有传播力", scores: { media: 2 } }
+    ]},
+    { question: "📚 你更喜欢哪种类型的书？", options: [
+      { text: "小说或散文，沉浸故事", scores: { word: 2 } },
+      { text: "摄影集或画册，视觉享受", scores: { visual: 2 } },
+      { text: "手工教程或设计类，实用", scores: { craft: 2 } },
+      { text: "工具书或效率管理，提升自我", scores: { organ: 2 } }
+    ]},
+    { question: "🎬 你更喜欢哪种类型的视频？", options: [
+      { text: "深度访谈或纪录片", scores: { word: 2 } },
+      { text: "旅拍或风景摄影", scores: { visual: 2 } },
+      { text: "动作或运动视频", scores: { motion: 2 } },
+      { text: "热门挑战或搞笑视频", scores: { media: 2 } }
+    ]},
+    { question: "🎮 你更喜欢哪种类型的游戏角色？", options: [
+      { text: "军师或法师，靠智慧", scores: { word: 2 } },
+      { text: "射手或猎人，靠观察", scores: { visual: 2 } },
+      { text: "刺客或战士，靠反应", scores: { motion: 2 } },
+      { text: "工匠或艺术家，靠创造", scores: { craft: 2 } }
+    ]},
+    { question: "📋 你更喜欢哪种类型的工作任务？", options: [
+      { text: "撰写报告或方案", scores: { word: 2 } },
+      { text: "设计海报或排版", scores: { digital: 2 } },
+      { text: "组织活动或会议", scores: { organ: 2 } },
+      { text: "运营社交平台或推广", scores: { media: 2 } }
+    ]},
+    { question: "🏃 你更喜欢哪种类型的运动？", options: [
+      { text: "瑜伽或慢跑，安静从容", scores: { word: 2 } },
+      { text: "攀岩或滑雪，刺激有挑战", scores: { motion: 2 } },
+      { text: "球类运动，团队协作", scores: { media: 2 } },
+      { text: "健身或举重，塑造自己", scores: { organ: 2 } }
+    ]},
+    { question: "🏝️ 你更喜欢哪种类型的旅行纪念品？", options: [
+      { text: "明信片或书签", scores: { word: 2 } },
+      { text: "当地风景照片", scores: { visual: 2 } },
+      { text: "手工艺品或特色小物", scores: { craft: 2 } },
+      { text: "热门打卡地的纪念品", scores: { media: 2 } }
+    ]},
+    { question: "🏠 你更喜欢哪种类型的房间装饰？", options: [
+      { text: "极简风，干净利落", scores: { organ: 2 } },
+      { text: "挂满照片和画作", scores: { visual: 2 } },
+      { text: "摆满手办和手工品", scores: { craft: 2 } },
+      { text: "科技感，带智能设备", scores: { digital: 2 } }
+    ]},
+    { question: "🎉 你更喜欢哪种类型的社交活动？", options: [
+      { text: "小型聚会，深入交流", scores: { word: 2 } },
+      { text: "户外郊游或摄影", scores: { visual: 2 } },
+      { text: "一起做手工或烹饪", scores: { craft: 2 } },
+      { text: "大型派对或线上活动", scores: { media: 2 } }
+    ]},
+    { question: "📱 你更喜欢哪种类型的手机App？", options: [
+      { text: "阅读或写作类", scores: { word: 2 } },
+      { text: "摄影或图片处理类", scores: { visual: 2 } },
+      { text: "视频剪辑或拍摄类", scores: { motion: 2 } },
+      { text: "社交或资讯类", scores: { media: 2 } }
+    ]},
+    { question: "🎨 你更喜欢哪种类型的设计？", options: [
+      { text: "简洁大方，功能性强", scores: { organ: 2 } },
+      { text: "色彩丰富，视觉冲击", scores: { visual: 2 } },
+      { text: "手工质感，有温度", scores: { craft: 2 } },
+      { text: "数字感强，科技时尚", scores: { digital: 2 } }
+    ]},
+    { question: "🎁 你更喜欢哪种类型的礼物包装？", options: [
+      { text: "简单干净，没有多余装饰", scores: { organ: 2 } },
+      { text: "精美华丽，有设计感", scores: { visual: 2 } },
+      { text: "手工包装，有个人特色", scores: { craft: 2 } },
+      { text: "热门品牌，有面子", scores: { media: 2 } }
+    ]},
+    { question: "✍️ 你更喜欢哪种类型的写作？", options: [
+      { text: "小说或故事创作", scores: { word: 2 } },
+      { text: "游记或摄影随笔", scores: { visual: 2 } },
+      { text: "手工教程或评测", scores: { craft: 2 } },
+      { text: "热点评论或观点文", scores: { media: 2 } }
+    ]},
+    { question: "🖼️ 你更喜欢哪种类型的视觉作品？", options: [
+      { text: "黑白摄影，经典", scores: { visual: 2 } },
+      { text: "彩色插画，活泼", scores: { craft: 2 } },
+      { text: "动态图形，有冲击力", scores: { motion: 2 } },
+      { text: "数字艺术，有科技感", scores: { digital: 2 } }
+    ]},
+    { question: "🎮 你更喜欢哪种类型的游戏画面？", options: [
+      { text: "像素风，怀旧", scores: { craft: 2 } },
+      { text: "写实风，沉浸", scores: { visual: 2 } },
+      { text: "卡通风，轻松", scores: { word: 2 } },
+      { text: "赛博朋克风，酷炫", scores: { digital: 2 } }
+    ]},
+    { question: "🏢 你更喜欢在哪种环境中工作？", options: [
+      { text: "安静独立的空间", scores: { organ: 2 } },
+      { text: "有音乐或背景音", scores: { motion: 2 } },
+      { text: "有视觉刺激，如海报或装饰", scores: { visual: 2 } },
+      { text: "有咖啡厅般的社交氛围", scores: { media: 2 } }
+    ]},
+    { question: "🔮 你更倾向于如何规划未来？", options: [
+      { text: "制定清晰的目标和里程碑", scores: { organ: 2 } },
+      { text: "设定大概方向，随机应变", scores: { motion: 2 } },
+      { text: "注重当下的感受和体验", scores: { visual: 2 } },
+      { text: "参考别人的成功路径", scores: { media: 2 } }
+    ]},
+    { question: "💡 当你有一个新想法时，你会？", options: [
+      { text: "写下来详细计划", scores: { word: 2 } },
+      { text: "马上告诉朋友讨论", scores: { media: 2 } },
+      { text: "先在脑海中想象画面", scores: { visual: 2 } },
+      { text: "动手尝试做出来", scores: { craft: 2 } }
+    ]},
+    { question: "💬 你更喜欢的沟通方式是？", options: [
+      { text: "面对面交谈", scores: { media: 2 } },
+      { text: "文字消息或邮件", scores: { word: 2 } },
+      { text: "视频通话", scores: { motion: 2 } },
+      { text: "手写信或卡片", scores: { craft: 2 } }
+    ]},
+    { question: "🔍 你更关注细节还是整体？", options: [
+      { text: "细节控，追求完美", scores: { digital: 2 } },
+      { text: "注重整体感觉", scores: { visual: 2 } },
+      { text: "关注结构和逻辑", scores: { organ: 2 } },
+      { text: "随性，看情况", scores: { motion: 2 } }
+    ]},
+    { question: "👥 你在团队中的角色通常是？", options: [
+      { text: "提出想法的人", scores: { craft: 2 } },
+      { text: "执行任务的人", scores: { digital: 2 } },
+      { text: "协调关系的人", scores: { media: 2 } },
+      { text: "分析问题的人", scores: { word: 2 } }
+    ]},
+    { question: "📤 你更愿意在哪个平台上分享内容？", options: [
+      { text: "公众号或博客写长文", scores: { word: 2 } },
+      { text: "图片社交平台发照片", scores: { visual: 2 } },
+      { text: "视频平台发Vlog", scores: { motion: 2 } },
+      { text: "微博或朋友圈发短动态", scores: { media: 2 } }
+    ]},
+    { question: "💻 你更愿意学习哪类软件？", options: [
+      { text: "Photoshop修图", scores: { digital: 2 } },
+      { text: "Procreate手绘", scores: { craft: 2 } },
+      { text: "Premiere剪辑", scores: { motion: 2 } },
+      { text: "Excel/Notion管理", scores: { organ: 2 } }
+    ]},
+    { question: "📝 你更喜欢什么样的工作反馈？", options: [
+      { text: "具体指出哪里可以改进", scores: { organ: 2 } },
+      { text: "肯定我的创意和想法", scores: { craft: 2 } },
+      { text: "告诉我成果被多少人看到", scores: { media: 2 } },
+      { text: "赞美我的作品美观", scores: { visual: 2 } }
+    ]},
+    { question: "📖 你更喜欢的阅读类型是？", options: [
+      { text: "深度长文或报告", scores: { word: 2 } },
+      { text: "图文并茂的杂志", scores: { visual: 2 } },
+      { text: "有声书或播客", scores: { motion: 2 } },
+      { text: "社交媒体短文", scores: { media: 2 } }
+    ]},
+    { question: "🖼️ 看到新的设计作品时，你首先注意到？", options: [
+      { text: "色彩搭配", scores: { visual: 2 } },
+      { text: "布局和结构", scores: { organ: 2 } },
+      { text: "创意概念", scores: { craft: 2 } },
+      { text: "使用的技术或工具", scores: { digital: 2 } }
+    ]},
+    { question: "🧪 你更倾向于哪种解决问题的方法？", options: [
+      { text: "逻辑分析，找规律", scores: { word: 2 } },
+      { text: "直觉判断，相信感觉", scores: { visual: 2 } },
+      { text: "尝试不同的方法，动手实验", scores: { craft: 2 } },
+      { text: "请教有经验的人", scores: { media: 2 } }
+    ]},
+    { question: "⏳ 你更喜欢哪种工作节奏？", options: [
+      { text: "稳定持续，每天推进一点", scores: { organ: 2 } },
+      { text: "爆发式工作，集中冲刺", scores: { motion: 2 } },
+      { text: "自由灵活，看心情", scores: { craft: 2 } },
+      { text: "跟着项目需求走", scores: { digital: 2 } }
+    ]},
+    { question: "👥 你更喜欢的团队氛围？", options: [
+      { text: "严谨高效，各司其职", scores: { organ: 2 } },
+      { text: "轻松活泼，创意无限", scores: { craft: 2 } },
+      { text: "竞争激烈，追求卓越", scores: { digital: 2 } },
+      { text: "温暖互助，像家人一样", scores: { media: 2 } }
+    ]},
+    { question: "🏅 你更愿意为什么类型的活动付出时间？", options: [
+      { text: "写作比赛或征文", scores: { word: 2 } },
+      { text: "摄影比赛", scores: { visual: 2 } },
+      { text: "微电影或短视频比赛", scores: { motion: 2 } },
+      { text: "线上运营挑战", scores: { media: 2 } }
+    ]},
+    { question: "📝 你更喜欢的记录方式？", options: [
+      { text: "写日记或手帐", scores: { word: 2 } },
+      { text: "拍照留存", scores: { visual: 2 } },
+      { text: "录视频或音频", scores: { motion: 2 } },
+      { text: "用App记录数据", scores: { digital: 2 } }
+    ]},
+    { question: "💡 你更倾向于如何获取灵感？", options: [
+      { text: "阅读书籍或文章", scores: { word: 2 } },
+      { text: "观察周围的人和事", scores: { visual: 2 } },
+      { text: "动手尝试新事物", scores: { craft: 2 } },
+      { text: "浏览社交媒体", scores: { media: 2 } }
+    ]},
+    { question: "🏛️ 你更喜欢哪种类型的展览？", options: [
+      { text: "书展或文学展", scores: { word: 2 } },
+      { text: "摄影展或画展", scores: { visual: 2 } },
+      { text: "科技展或设计展", scores: { digital: 2 } },
+      { text: "创意市集或手作展", scores: { craft: 2 } }
+    ]},
+    { question: "👥 你更愿意在团队中承担哪种角色？", options: [
+      { text: "记录会议和整理文档", scores: { word: 2 } },
+      { text: "负责拍摄和记录影像", scores: { visual: 2 } },
+      { text: "负责设计和美化", scores: { digital: 2 } },
+      { text: "负责协调和沟通", scores: { organ: 2 } }
+    ]},
+    { question: "📌 你更喜欢哪种类型的任务？", options: [
+      { text: "独立完成，深度思考", scores: { word: 2 } },
+      { text: "与视觉相关的任务", scores: { visual: 2 } },
+      { text: "需要动手制作的任务", scores: { craft: 2 } },
+      { text: "需要团队协作的任务", scores: { media: 2 } }
+    ]}
+  ];
+
+  // ==================== 判断题池（30题） ====================
+  const judgePool = [
+    { question: "📊 比起写报告，我更愿意做一个PPT演示文稿。", options: [
+      { text: "是的，我更愿意做PPT", scores: { digital: 2 } },
+      { text: "不是，我更喜欢写报告", scores: { word: 2 } }
+    ]},
+    { question: "🗂️ 我倾向于先制定计划再行动，而不是边做边调整。", options: [
+      { text: "是的，我先做计划", scores: { organ: 2 } },
+      { text: "不是，我边做边调整", scores: { motion: 2 } }
+    ]},
+    { question: "📷 我更喜欢用照片记录生活，而不是写日记。", options: [
+      { text: "是的，照片更直观", scores: { visual: 2 } },
+      { text: "不是，我喜欢写日记", scores: { word: 2 } }
+    ]},
+    { question: "🎁 我更喜欢自己动手做礼物，而不是购买现成的。", options: [
+      { text: "是的，自己做更有心意", scores: { craft: 2 } },
+      { text: "不是，买现成的更方便", scores: { organ: 2 } }
+    ]},
+    { question: "📣 我经常主动在社交平台分享内容。", options: [
+      { text: "是的，我经常分享", scores: { media: 2 } },
+      { text: "不是，我很少分享", scores: { word: 2 } }
+    ]},
+    { question: "💻 遇到不懂的问题，我更倾向于搜索教程而不是问别人。", options: [
+      { text: "是的，我习惯自己搜", scores: { digital: 2 } },
+      { text: "不是，我喜欢问别人", scores: { media: 2 } }
+    ]},
+    { question: "🧹 我喜欢把东西整理得井井有条，否则会难受。", options: [
+      { text: "是的，我有整理癖", scores: { organ: 2 } },
+      { text: "不是，我比较随意", scores: { craft: 2 } }
+    ]},
+    { question: "🎞️ 比起静态图片，我更喜欢动态视频。", options: [
+      { text: "是的，视频更有趣", scores: { motion: 2 } },
+      { text: "不是，静态图也很有魅力", scores: { visual: 2 } }
+    ]},
+    { question: "📝 我倾向于用文字表达复杂的情感。", options: [
+      { text: "是的，文字更能表达", scores: { word: 2 } },
+      { text: "不是，我更喜欢用行动表达", scores: { organ: 2 } }
+    ]},
+    { question: "🎨 我经常使用PS或其他修图软件处理照片。", options: [
+      { text: "是的，我常修图", scores: { digital: 2 } },
+      { text: "不是，我基本不修图", scores: { visual: 2 } }
+    ]},
+    { question: "🤝 我喜欢在团队中扮演协调者的角色。", options: [
+      { text: "是的，我喜欢协调", scores: { organ: 2 } },
+      { text: "不是，我更喜欢独立工作", scores: { word: 2 } }
+    ]},
+    { question: "📲 我经常刷社交媒体，关注热点动态。", options: [
+      { text: "是的，我时刻关注热点", scores: { media: 2 } },
+      { text: "不是，我很少看热点", scores: { word: 2 } }
+    ]},
+    { question: "✍️ 我更喜欢手绘，而不是用电脑软件绘图。", options: [
+      { text: "是的，手绘更有感觉", scores: { craft: 2 } },
+      { text: "不是，电脑软件更方便", scores: { digital: 2 } }
+    ]},
+    { question: "📸 我经常用手机或相机随手拍下有趣的东西。", options: [
+      { text: "是的，我随手拍", scores: { visual: 2 } },
+      { text: "不是，我很少拍", scores: { organ: 2 } }
+    ]},
+    { question: "🎬 我更喜欢看教程视频而不是读说明书。", options: [
+      { text: "是的，视频更直观", scores: { motion: 2 } },
+      { text: "不是，说明书更准确", scores: { word: 2 } }
+    ]},
+    { question: "🔧 我经常自己动手做点小东西或装饰。", options: [
+      { text: "是的，我经常做手工", scores: { craft: 2 } },
+      { text: "不是，我很少做手工", scores: { digital: 2 } }
+    ]},
+    { question: "👂 我在社交场合中更倾向于倾听而不是表达。", options: [
+      { text: "是的，我更喜欢听", scores: { word: 2 } },
+      { text: "不是，我更喜欢说", scores: { media: 2 } }
+    ]},
+    { question: "📱 我经常用手机记录待办事项。", options: [
+      { text: "是的，我用App记录", scores: { digital: 2 } },
+      { text: "不是，我记在脑子里", scores: { organ: 2 } }
+    ]},
+    { question: "🖼️ 我更喜欢看图片多于文字。", options: [
+      { text: "是的，图片更吸引我", scores: { visual: 2 } },
+      { text: "不是，文字更让我沉浸", scores: { word: 2 } }
+    ]},
+    { question: "🎉 我更喜欢参加团队活动而不是独自活动。", options: [
+      { text: "是的，我喜欢团队活动", scores: { media: 2 } },
+      { text: "不是，我享受独处", scores: { craft: 2 } }
+    ]},
+    { question: "📅 我喜欢在开始任务前制定详细的计划。", options: [
+      { text: "是的，我制定计划", scores: { organ: 2 } },
+      { text: "不是，我直接开始", scores: { motion: 2 } }
+    ]},
+    { question: "💻 我经常使用手机或电脑进行创作。", options: [
+      { text: "是的，我用数字工具", scores: { digital: 2 } },
+      { text: "不是，我更喜欢手工", scores: { craft: 2 } }
+    ]},
+    { question: "🖼️ 我更愿意用图片而不是文字来表达想法。", options: [
+      { text: "是的，图片更直观", scores: { visual: 2 } },
+      { text: "不是，文字更准确", scores: { word: 2 } }
+    ]},
+    { question: "📤 我经常主动在社交平台上分享我的作品。", options: [
+      { text: "是的，我经常分享", scores: { media: 2 } },
+      { text: "不是，我很少分享", scores: { word: 2 } }
+    ]},
+    { question: "🧑‍💻 我更喜欢独自完成任务而不是团队合作。", options: [
+      { text: "是的，独自效率更高", scores: { word: 2 } },
+      { text: "不是，我喜欢团队", scores: { media: 2 } }
+    ]},
+    { question: "🎨 我对色彩和构图非常敏感。", options: [
+      { text: "是的，我对画面敏感", scores: { visual: 2 } },
+      { text: "不是，我注重秩序", scores: { organ: 2 } }
+    ]},
+    { question: "🎬 我经常用视频记录生活中的有趣瞬间。", options: [
+      { text: "是的，我拍视频", scores: { motion: 2 } },
+      { text: "不是，我更爱拍照", scores: { visual: 2 } }
+    ]},
+    { question: "💻 我更喜欢使用电子工具而不是手工工具。", options: [
+      { text: "是的，电子工具更方便", scores: { digital: 2 } },
+      { text: "不是，手工更有温度", scores: { craft: 2 } }
+    ]},
+    { question: "🤫 我倾向于在安静的环境中工作。", options: [
+      { text: "是的，安静让我专注", scores: { organ: 2 } },
+      { text: "不是，我喜欢热闹", scores: { media: 2 } }
+    ]},
+    { question: "📰 我经常关注网上的热点话题。", options: [
+      { text: "是的，我关注热点", scores: { media: 2 } },
+      { text: "不是，我很少关注", scores: { word: 2 } }
+    ]}
+  ];
+
+  // ==================== 工具函数 ====================
+  function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  // 打乱选择题选项（仅当选项数>2）
+  function shuffleOptionsForChoice(q) {
+    if (q.options.length > 2) {
+      const newOptions = shuffleArray([...q.options]);
+      return { ...q, options: newOptions };
+    }
+    return q;
+  }
+
+  function selectBalancedQuestions(pool, count) {
+    const traitKeys = Object.keys(TRAIT_NAMES);
+    const maxAttempts = 500;
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      const shuffled = shuffleArray([...pool]);
+      const selected = shuffled.slice(0, count);
+      const traitCounts = {};
+      traitKeys.forEach(k => traitCounts[k] = 0);
+      selected.forEach(q => {
+        q.options.forEach(opt => {
+          Object.keys(opt.scores).forEach(t => {
+            if (traitCounts.hasOwnProperty(t)) traitCounts[t] += opt.scores[t];
+          });
+        });
+      });
+      const counts = Object.values(traitCounts);
+      const min = Math.min(...counts);
+      const max = Math.max(...counts);
+      if (max - min <= 5) return selected;
+    }
+    return shuffleArray([...pool]).slice(0, count);
+  }
+
+  function buildQuestions(mode) {
+    let choices, judges;
+    if (mode === 'short') {
+      choices = selectBalancedQuestions(choicePool, 10);
+      judges = selectBalancedQuestions(judgePool, 3);
+    } else if (mode === 'normal') {
+      choices = selectBalancedQuestions(choicePool, 20);
+      judges = selectBalancedQuestions(judgePool, 5);
+    } else if (mode === 'full') {
+      choices = selectBalancedQuestions(choicePool, 30);
+      judges = selectBalancedQuestions(judgePool, 10);
+    } else {
+      choices = [];
+      judges = [];
+    }
+    // 为选择题打乱选项顺序（判断题保持原样）
+    const shuffledChoices = choices.map(q => shuffleOptionsForChoice(q));
+    return [...shuffledChoices, ...judges];
+  }
+
+  // ==================== 状态 ====================
+  let mode = null;
+  let questions = [];
+  let currentIndex = 0;
+  let answers = [];
+  let finished = false;
+  const container = document.getElementById('appContainer');
+
+  function calcTraitScores() {
+    const traits = { word: 0, visual: 0, motion: 0, craft: 0, digital: 0, organ: 0, media: 0 };
+    answers.forEach(ans => {
+      if (ans) Object.keys(ans).forEach(t => { if (traits.hasOwnProperty(t)) traits[t] += ans[t]; });
+    });
+    return traits;
+  }
+
+  function calcDeptScores(traits) {
+    const deptScores = {};
+    Object.keys(DEPARTMENTS).forEach(deptKey => {
+      const mapping = DEPT_MAPPING[deptKey];
+      let score = 0;
+      Object.keys(mapping).forEach(t => { score += (traits[t] || 0) * mapping[t]; });
+      deptScores[deptKey] = score;
+    });
+    return deptScores;
+  }
+
+  function topDepts(scores) {
+    const max = Math.max(...Object.values(scores));
+    return max === 0 ? [] : Object.keys(scores).filter(d => scores[d] === max);
+  }
+
+  // ==================== 雷达图 ====================
+  function drawRadarChart(canvasId, traitScores) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    const cx = W / 2, cy = H / 2;
+    const radius = Math.min(W, H) * 0.38;
+    const levels = 5;
+    const traitKeys = ['word', 'visual', 'motion', 'craft', 'digital', 'organ', 'media'];
+    const labels = traitKeys.map(k => TRAIT_NAMES[k]);
+    const values = traitKeys.map(k => traitScores[k]);
+
+    ctx.clearRect(0, 0, W, H);
+    for (let level = 1; level <= levels; level++) {
+      const r = (radius * level) / levels;
+      ctx.beginPath();
+      for (let i = 0; i < traitKeys.length; i++) {
+        const angle = (Math.PI * 2 * i) / traitKeys.length - Math.PI / 2;
+        const x = cx + r * Math.cos(angle), y = cy + r * Math.sin(angle);
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      ctx.strokeStyle = '#c0d5e8'; ctx.lineWidth = 1; ctx.stroke();
+    }
+    for (let i = 0; i < traitKeys.length; i++) {
+      const angle = (Math.PI * 2 * i) / traitKeys.length - Math.PI / 2;
+      const x = cx + radius * Math.cos(angle), y = cy + radius * Math.sin(angle);
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(x, y);
+      ctx.strokeStyle = '#a0bbd4'; ctx.lineWidth = 1; ctx.stroke();
+      ctx.fillStyle = '#1e4868';
+      ctx.font = '10px "Segoe UI", "PingFang SC", sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      const labelRadius = radius + 18;
+      ctx.fillText(labels[i], cx + labelRadius * Math.cos(angle), cy + labelRadius * Math.sin(angle));
+    }
+    const maxScore = Math.max(...values, 1);
+    ctx.beginPath();
+    for (let i = 0; i < traitKeys.length; i++) {
+      const angle = (Math.PI * 2 * i) / traitKeys.length - Math.PI / 2;
+      const r = (values[i] / maxScore) * radius;
+      const x = cx + r * Math.cos(angle), y = cy + r * Math.sin(angle);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(30, 120, 180, 0.3)'; ctx.fill();
+    ctx.strokeStyle = '#1e6fa5'; ctx.lineWidth = 2; ctx.stroke();
+    for (let i = 0; i < traitKeys.length; i++) {
+      const angle = (Math.PI * 2 * i) / traitKeys.length - Math.PI / 2;
+      const r = (values[i] / maxScore) * radius;
+      const x = cx + r * Math.cos(angle), y = cy + r * Math.sin(angle);
+      ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fillStyle = '#0b3d57'; ctx.fill();
+    }
+  }
+
+  // ==================== 渲染 ====================
+  function renderEntrance() {
+    container.innerHTML = `
+      <div class="detective-badge">🕵️ 案件编号 #BETI</div>
+      <div class="header"><div class="logo-row">🦅🔍</div><div class="title">蓝鹰侦探局</div><div class="subtitle">📋 BETI特工潜能测试</div></div>
+      <div style="text-align:center; margin: 8px 0; color: #2d5670; font-weight:500;">请选择侦测深度</div>
+      <div class="mode-select">
+        <button class="mode-btn" id="shortModeBtn">
+          <span class="mode-icon">⚡</span>
+          <span class="mode-text">
+            <div class="mode-title">极速侦测</div>
+            <div class="mode-desc">13题（10选择+3判断） · 约1分钟</div>
+          </span>
+          <span class="arrow">›</span>
+        </button>
+        <button class="mode-btn" id="normalModeBtn">
+          <span class="mode-icon">🔎</span>
+          <span class="mode-text">
+            <div class="mode-title">深度侦测</div>
+            <div class="mode-desc">25题（20选择+5判断） · 约3分钟</div>
+          </span>
+          <span class="arrow">›</span>
+        </button>
+        <button class="mode-btn" id="fullModeBtn">
+          <span class="mode-icon">🧠</span>
+          <span class="mode-text">
+            <div class="mode-title">纯享侦测</div>
+            <div class="mode-desc">40题（30选择+10判断） · 约5分钟</div>
+          </span>
+          <span class="arrow">›</span>
+        </button>
+      </div>
+      <div class="tip-line">📝 题目越多，结果越准～</div>
+      <p style="text-align:center; color:#517a94; margin-top:16px; font-size:13px;">💡 答案没有对错，选最接近你的状态就好</p>
+    `;
+    document.getElementById('shortModeBtn').addEventListener('click', () => startTest('short'));
+    document.getElementById('normalModeBtn').addEventListener('click', () => startTest('normal'));
+    document.getElementById('fullModeBtn').addEventListener('click', () => startTest('full'));
+  }
+
+  function startTest(modeName) {
+    mode = modeName;
+    questions = buildQuestions(modeName);
+    answers = new Array(questions.length).fill(null);
+    currentIndex = 0;
+    finished = false;
+    render();
+  }
+
+  function render() { if (finished) { renderResult(); return; } renderQuestion(); }
+
+  function renderQuestion() {
+    const q = questions[currentIndex];
+    const sel = answers[currentIndex];
+    const progress = (currentIndex / questions.length) * 100;
+    let optsHtml = '';
+    q.options.forEach((opt, i) => {
+      const letter = String.fromCharCode(65 + i);
+      const isSel = sel && JSON.stringify(sel) === JSON.stringify(opt.scores);
+      optsHtml += `<div class="option-btn ${isSel ? 'selected' : ''}" data-opt="${i}"><span class="option-letter">${letter}</span><span>${opt.text}</span></div>`;
+    });
+    const isJudge = q.options.length === 2;
+    container.innerHTML = `
+      <div class="detective-badge">🕵️ 案件编号 #BETI</div>
+      <div class="header"><div class="logo-row">🦅🔍</div><div class="title">蓝鹰侦探局</div><div class="subtitle">${mode==='short'?'⚡ 极速侦测':(mode==='normal'?'🔎 深度侦测':'🧠 纯享侦测')} · 情报收集</div></div>
+      <div class="progress-section"><div class="progress-bar-bg"><div class="progress-fill" style="width:${progress}%;"></div></div><div class="question-counter"><span>📌 情报 ${currentIndex+1}/${questions.length}</span><span>🔎 ${Math.round(progress)}%</span></div></div>
+      <div class="card"><div class="question-text">${q.question}${isJudge ? ' <span style="font-size:14px;color:#888;">（判断题）</span>' : ''}</div><div class="options">${optsHtml}</div></div>
+      <div class="nav-buttons">
+        <button class="nav-btn" id="prevBtn" ${currentIndex===0?'disabled':''}>◂ 上一题</button>
+        <button class="nav-btn" id="nextBtn" ${currentIndex===questions.length-1?'style="display:none;"':''}>下一题 ▸</button>
+      </div>
+      ${currentIndex===questions.length-1?`<div class="submit-area"><button class="primary-btn" id="submitBtn">🔓 生成我的特工档案</button></div>`:''}
+    `;
+    document.querySelectorAll('.option-btn').forEach(b => b.addEventListener('click', e => selectOption(parseInt(e.currentTarget.dataset.opt))));
+    document.getElementById('prevBtn')?.addEventListener('click', () => { if (currentIndex>0) { currentIndex--; render(); } });
+    document.getElementById('nextBtn')?.addEventListener('click', () => { if (currentIndex<questions.length-1) { currentIndex++; render(); } });
+    document.getElementById('submitBtn')?.addEventListener('click', () => {
+      const unf = answers.findIndex(a => a===null);
+      if (unf!==-1) { alert(`⚠️ 还有情报未收集（第${unf+1}题）。`); currentIndex=unf; render(); return; }
+      finished=true; render();
+    });
+  }
+
+  function selectOption(idx) {
+    answers[currentIndex] = Object.assign({}, questions[currentIndex].options[idx].scores);
+    if (currentIndex < questions.length-1) { currentIndex++; render(); } else render();
+  }
+
+  function renderResult() {
+    const traits = calcTraitScores();
+    const deptScores = calcDeptScores(traits);
+    const top = topDepts(deptScores);
+    const maxDeptScore = Math.max(...Object.values(deptScores), 1);
+    const order = ['edit','photo','video','draw','tech','office','ops'];
+    let listHtml = '';
+    order.forEach(k => {
+      const d = DEPARTMENTS[k];
+      const p = (deptScores[k]/maxDeptScore)*100;
+      listHtml += `<div class="score-row"><span class="dept-label">${d.emoji} ${d.name}</span><div class="bar-bg"><div class="bar-fill" style="width:${p}%;"></div></div><span style="min-width:28px; text-align:right; font-weight:700;">${deptScores[k]}</span></div>`;
+    });
+    let recHtml = '';
+    if (top.length===1) {
+      const d = DEPARTMENTS[top[0]];
+      recHtml = `<div class="result-badge">${d.emoji}</div><div class="dept-name">${d.name}</div><div class="dept-desc">${d.desc}</div><p style="color:#1e4868; margin-top:8px; font-weight:500;">🧬 性格特质：${d.traits}</p>`;
+    } else {
+      const names = top.map(k => DEPARTMENTS[k].name).join(' 与 ');
+      recHtml = `<div class="result-badge">🦅✨</div><div class="dept-name">${names}</div><div class="dept-desc">你的性格特质在多个方向都有亮点！蓝鹰支持<strong>双部门</strong>，建议都了解一下。</div>`;
+    }
+    container.innerHTML = `
+      <div class="detective-badge">📁 档案解密</div>
+      <div class="header"><div class="logo-row">🦅🔓</div><div class="title">特工潜能报告</div><div class="subtitle">BETI分析完成</div></div>
+      <div class="card result-card">${recHtml}</div>
+      <div class="radar-container"><canvas id="radarCanvas" width="300" height="300"></canvas></div>
+      <div class="score-list"><h3 style="margin:0 0 8px; color:#0a3144;">📊 部门匹配指数</h3>${listHtml}</div>
+      <div style="display:flex; justify-content:center; margin-top:16px;"><button class="restart-btn" id="restartBtn">🔄 重新侦测</button></div>
+      <div class="disclaimer">✨ 测试结果仅供参考，最终选择请结合自身兴趣和实际情况～</div>
+      <p style="text-align:center; color:#517a94; margin-top:10px; font-size:14px;">💙 蓝鹰通讯社 · 七大部门等你加入<br>采编部 | 摄影部 | 影像部 | 手绘部 | 技术部 | 综合办公室 | 网运部</p>
+    `;
+    drawRadarChart('radarCanvas', traits);
+    document.getElementById('restartBtn').addEventListener('click', () => {
+      mode = null; questions = []; answers = []; currentIndex = 0; finished = false;
+      renderEntrance();
+    });
+  }
+
+  renderEntrance();
+})();
+</script>
+</body>
+</html>
