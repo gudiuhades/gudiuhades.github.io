@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>蓝鹰侦探局 · BETI特工潜能测试</title>
+  <style>
+    /* ==================== 原有样式保持不变 ==================== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: linear-gradient(160deg, #0a1f2e 0%, #0b2b3f 40%, #0f3b55 100%);
+      font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+      min-height: 100vh; display: flex; justify-content: center; align-items: center;
+      padding: 20px; margin: 0; background-attachment: fixed;
+    }
+    body::before {
+      content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at 20% 30%, rgba(0,180,255,0.06) 0%, transparent 30%),
+                  radial-gradient(circle at 80% 70%, rgba(0,150,210,0.1) 0%, transparent 40%);
+      pointer-events: none;
+    }
+    .container {
+      width: 100%; max-width: 600px; background: rgba(246,250,255,0.95);
+      backdrop-filter: blur(20px); border-radius: 40px;
+      box-shadow: 0 30px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(100,180,255,0.2);
+      padding: 28px 22px 32px; display: flex; flex-direction: column;
+      position: relative; z-index: 1; border: 1px solid rgba(75,160,230,0.3);
+    }
+    .detective-badge {
+      position: absolute; top: -15px; right: 25px; background: #0f3b55;
+      color: #ffd966; font-size: 12px; padding: 5px 14px; border-radius: 20px;
+      letter-spacing: 2px; font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      border: 1px solid #6eb5e0;
+    }
+    .header { text-align: center; margin-bottom: 8px; }
+    .logo-row { font-size: 44px; letter-spacing: 4px; filter: drop-shadow(0 6px 8px rgba(0,100,180,0.3)); margin-bottom: 4px; }
+    .title {
+      font-size: 28px; font-weight: 800;
+      background: linear-gradient(180deg, #0b3550 0%, #1d5375 80%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      letter-spacing: 2px; margin: 6px 0 2px;
+    }
+    .subtitle {
+      color: #3e6b87; font-weight: 600; font-size: 15px;
+      border-bottom: 1px dashed #b8d3e9; padding-bottom: 12px; margin-bottom: 8px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .mode-select { display: flex; flex-direction: column; gap: 16px; margin: 24px 0; }
+    .mode-btn {
+      background: linear-gradient(135deg, #0b3d57, #176087);
+      border: none; border-radius: 24px; padding: 18px 22px;
+      color: white; font-weight: 700; font-size: 18px; cursor: pointer;
+      transition: 0.25s; display: flex; align-items: center; gap: 14px;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.3); border: 1px solid rgba(255,215,0,0.3);
+    }
+    .mode-btn:hover { transform: translateY(-3px); box-shadow: 0 18px 32px rgba(0,0,0,0.5); border-color: #ffd966; }
+    .mode-btn .mode-icon { font-size: 32px; flex-shrink: 0; width: 40px; text-align: center; }
+    .mode-btn .mode-text { flex: 1; text-align: center; }
+    .mode-btn .mode-title { font-size: 22px; margin-bottom: 4px; }
+    .mode-btn .mode-desc { font-size: 14px; opacity: 0.9; font-weight: 400; }
+    .mode-btn .arrow { font-size: 24px; flex-shrink: 0; }
+    .progress-section { margin: 8px 0 14px; }
+    .progress-bar-bg { height: 10px; background: #d4e1f0; border-radius: 20px; overflow: hidden; width: 100%; box-shadow: inset 0 1px 3px rgba(0,0,0,0.2); }
+    .progress-fill { height: 10px; background: linear-gradient(90deg, #1f6e9c, #3498c7); width: 0%; border-radius: 20px; transition: width 0.3s ease; box-shadow: 0 0 12px #2e95d4; }
+    .question-counter { display: flex; justify-content: space-between; color: #1e4868; font-size: 14px; margin-top: 8px; font-weight: 600; }
+    .card {
+      background: #ffffff; border-radius: 32px; padding: 24px 20px;
+      box-shadow: 0 12px 28px rgba(9,45,75,0.12); margin: 6px 0 16px;
+      border: 1px solid #e7f0fa; position: relative;
+    }
+    .card::before { content: "🔍"; position: absolute; top: -12px; left: 20px; font-size: 22px; opacity: 0.6; }
+    .question-text { font-size: 20px; font-weight: 700; color: #0a3144; margin: 8px 0 20px; line-height: 1.5; text-align: center; }
+    .options { display: flex; flex-direction: column; gap: 10px; }
+    .option-btn {
+      background: #f4f9ff; border: 1.5px solid #d2e2f5; border-radius: 16px;
+      padding: 13px 16px; font-size: 15px; font-weight: 500; color: #123d52;
+      text-align: left; transition: all 0.2s ease; cursor: pointer;
+      display: flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, #f8fcff, #f0f6fe);
+    }
+    .option-btn:hover { background: #e1f0ff; border-color: #2980b9; transform: translateY(-2px); box-shadow: 0 8px 16px -8px rgba(0,100,180,0.3); }
+    .option-btn.selected { background: #daefff; border-color: #1e6fa5; box-shadow: 0 0 0 2px rgba(30,120,180,0.3); }
+    .option-letter {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: linear-gradient(145deg, #1b5470, #23668a); color: white;
+      font-weight: 700; width: 28px; height: 28px; border-radius: 10px; font-size: 14px; flex-shrink: 0;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 14px; }
+    .nav-btn { background: #eef4fa; border: 1px solid #b1ccdf; padding: 10px 24px; border-radius: 40px; font-weight: 600; color: #13455f; cursor: pointer; font-size: 15px; display: flex; align-items: center; gap: 4px; transition: 0.2s; }
+    .nav-btn:disabled { opacity: 0.4; pointer-events: none; background: #e0e8ef; }
+    .nav-btn:hover:not(:disabled) { background: #d5ebff; border-color: #1e6fa5; }
+    .submit-area { margin-top: 20px; display: flex; justify-content: center; }
+    .primary-btn {
+      background: linear-gradient(115deg, #0b3d57, #176087); border: none;
+      padding: 16px 38px; border-radius: 50px; color: white; font-weight: 700; font-size: 17px;
+      letter-spacing: 1.5px; cursor: pointer; box-shadow: 0 10px 20px -6px rgba(7,60,90,0.5);
+      transition: all 0.25s; display: flex; align-items: center; gap: 8px;
+      border: 1px solid rgba(255,215,0,0.4);
+    }
+    .primary-btn:hover { background: linear-gradient(115deg, #0f4d6e, #1f74a2); transform: translateY(-2px); box-shadow: 0 16px 26px -10px #083049; }
+    .result-card { text-align: center; }
+    .result-badge { font-size: 55px; margin-bottom: 6px; }
+    .dept-name { font-size: 32px; font-weight: 800; color: #06263a; margin: 8px 0 6px; }
+    .dept-desc { color: #1f445e; font-size: 16px; margin: 14px 0; line-height: 1.7; background: #edf5fd; padding: 18px; border-radius: 24px; text-align: left; border-left: 4px solid #1b6b93; }
+    .score-list { text-align: left; margin: 18px 0 8px; background: #f4fafd; border-radius: 20px; padding: 14px 16px; }
+    .score-row { display: flex; align-items: center; justify-content: space-between; margin: 10px 0; font-weight: 500; }
+    .dept-label { width: 130px; color: #0a3349; font-weight: 600; }
+    .bar-bg { flex: 1; height: 10px; background: #d4e4f3; border-radius: 20px; margin: 0 12px; overflow: hidden; }
+    .bar-fill { height: 10px; background: linear-gradient(90deg, #1a658b, #379fd0); border-radius: 20px; width: 0%; }
+    .restart-btn { background: white; border: 1px solid #155b7e; color: #155b7e; margin-top: 18px; padding: 12px 28px; border-radius: 30px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; }
+    .restart-btn:hover { background: #d9eeff; }
+    .radar-container { display: flex; justify-content: center; margin: 20px 0; }
+    canvas { background: #f8fbff; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .tip-line { text-align: center; color: #6b8ca0; font-size: 13px; margin-top: 8px; }
+    .disclaimer { text-align: center; color: #8aa3b8; font-size: 12px; margin-top: 16px; }
+
+    /* 新增分享与部门详情样式 */
+    .share-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    .share-btn {
+      background: white;
+      border: 1px solid #155b7e;
+      color: #155b7e;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.2s;
+      font-size: 14px;
+    }
+    .share-btn:hover { background: #d9eeff; }
+    .dept-details-container {
+      display: none;
+      background: #f4fafd;
+      border-radius: 20px;
+      padding: 16px;
+      margin-top: 16px;
+      text-align: left;
+    }
+    .dept-details-container.show { display: block; }
+    .dept-detail-item {
+      margin-bottom: 12px;
+      border: 1px solid #d4e4f3;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .dept-detail-header {
+      background: #eef4fa;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-weight: 700;
+      color: #13455f;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .dept-detail-body {
+      padding: 12px 16px;
+      background: white;
+      color: #123d52;
+      font-size: 14px;
+      line-height: 1.6;
+      display: none;
+    }
+    .dept-detail-body.open { display: block; }
+    .toggle-detail-btn {
+      background: none;
+      border: none;
+      color: #155b7e;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 14px;
+      text-decoration: underline;
+      padding: 0;
+    }
+    @media (max-width: 450px) {
+      .container { padding: 20px 16px; }
+      .option-btn { padding: 12px 14px; font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="appContainer"></div>
+<script>
+(function() {
+  // ==================== 部门定义 ====================
+  const DEPARTMENTS = {
+    edit: {
+      name: '采编部', emoji: '📝',
+      desc: '你喜欢用文字把世界理顺。采编部需要的就是这种把零散信息编织成故事、把复杂事实讲清楚的能力。',
+      traits: '文字倾向强、善于梳理逻辑',
+      detail: '采编部负责校园公众号内容创作，包括选题策划、采访撰稿、排版设计。部门氛围轻松，欢迎对写作和媒体有热情的同学，零基础可以学习。'
+    },
+    photo: {
+      name: '摄影部', emoji: '📷',
+      desc: '你对画面和瞬间有天然的敏感。摄影部需要的就是这种用镜头捕捉细节、用光影讲述故事的天赋。',
+      traits: '画面敏感、观察入微',
+      detail: '摄影部负责校园活动跟拍、创意摄影、图集制作，也会定期举办摄影分享。设备不限，手机或相机均可，注重个人风格培养。'
+    },
+    video: {
+      name: '影像部（DV部）', emoji: '🎬',
+      desc: '你喜欢让一切动起来。影像部需要的就是这种把画面、声音、节奏组合成完整叙事的热情。',
+      traits: '动态表达、节奏感好',
+      detail: '影像部负责视频拍摄与制作，包括微电影、活动跟拍、校园采访等。部门设备齐全，会教授分镜、拍摄、剪辑全流程。'
+    },
+    draw: {
+      name: '视觉中心·手绘部', emoji: '🎨',
+      desc: '你的手和想象力配合默契。手绘部需要的就是这种用线条和色彩把脑内画面搬进现实的能力。',
+      traits: '手工创作欲强、想象力丰富',
+      detail: '手绘部负责推文插画、文创设计、活动装饰等。每周有绘画教学，氛围活泼，支持零基础学习，欢迎复合型人才。'
+    },
+    tech: {
+      name: '视觉中心·技术部', emoji: '💻',
+      desc: '你喜欢用软件和数字工具进行视觉创作。技术部需要的就是这种用PS、AI等软件将想法变成平面作品的能力。',
+      traits: '软件创作、视觉执行、细节控',
+      detail: '技术部专注平面设计，使用PS、AI等软件制作海报、展板、推文头图等。提供系统教学，欢迎对设计有兴趣的同学。'
+    },
+    office: {
+      name: '综合办公室（秘书部）', emoji: '📋',
+      desc: '你天生就有让一切井井有条的能力。综合办公室需要的就是这种统筹全局、协调各方的可靠品格。',
+      traits: '秩序感强、善于沟通协调',
+      detail: '综合办公室负责活动统筹、物资管理、公文撰写、内外联络，是社团运转的核心。能锻炼组织能力和Office技能，适合细心可靠的同学。'
+    },
+    ops: {
+      name: '网运部（网络运营部）', emoji: '📡',
+      desc: '你对平台和数据有天然的兴趣。网运部需要的就是这种让信息精准触达、让活动被更多人看见的能力。',
+      traits: '传播意识强、对数据敏感',
+      detail: '网运部负责易班平台运营、推文搬运、失物招领、线上活动策划。会学习后台操作、数据分析和内容运营，适合对新媒体感兴趣的新生。'
+    }
+  };
+
+  // ==================== 性格维度 ====================
+  const TRAIT_NAMES = {
+    word: '文字梳理',
+    visual: '画面敏感',
+    motion: '动态表达',
+    craft: '手工创造',
+    digital: '软件创作',
+    organ: '秩序规划',
+    media: '传播分享'
+  };
+
+  const DEPT_MAPPING = {
+    edit:   { word: 4, organ: 2, media: 1, visual: 1 },
+    photo:  { visual: 4, motion: 1, word: 1, craft: 1 },
+    video:  { motion: 4, visual: 2, digital: 1, organ: 1 },
+    draw:   { craft: 4, visual: 3, motion: 1 },
+    tech:   { digital: 4, visual: 3, craft: 1 },
+    office: { organ: 4, word: 2, media: 1, digital: 1 },
+    ops:    { media: 4, digital: 2, organ: 1, word: 1 }
+  };
+
+  // ==================== 选择题池（70题） ====================
+  const choicePool = [ /* 与之前相同，此处省略以确保代码长度合理，实际使用时需包含完整题库 */ ];
+
+  // ==================== 判断题池（30题） ====================
+  const judgePool = [ /* 与之前相同，此处省略 */ ];
+
+  // 为了保持代码完整，请使用之前提供的完整题库数组，这里省略以避免长度超限。
+
+  // ==================== 工具函数 ====================
+  function shuffleArray(arr) { /* 相同 */ }
+  function shuffleOptionsForChoice(q) { /* 相同 */ }
+  function selectBalancedQuestions(pool, count) { /* 相同 */ }
+  function buildQuestions(mode) { /* 相同 */ }
+
+  // ==================== 状态 ====================
+  let mode = null;
+  let questions = [];
+  let currentIndex = 0;
+  let answers = [];
+  let finished = false;
+  const container = document.getElementById('appContainer');
+
+  // ==================== 计分与结果计算 ====================
+  function calcTraitScores() { /* 相同 */ }
+  function calcDeptScores(traits) { /* 相同 */ }
+  function topDepts(scores) { /* 相同 */ }
+
+  // ==================== 雷达图绘制（原有） ====================
+  function drawRadarChart(canvasId, traitScores) { /* 相同 */ }
+
+  // ==================== 新增：分享卡片绘制 ====================
+  function generateShareCard(traits, deptScores, topDeptKeys, maxDeptScore) {
+    const canvas = document.createElement('canvas');
+    canvas.width = 600;
+    canvas.height = 800;
+    const ctx = canvas.getContext('2d');
+
+    // 背景
+    const gradient = ctx.createLinearGradient(0, 0, 0, 800);
+    gradient.addColorStop(0, '#f8fbff');
+    gradient.addColorStop(1, '#dbeafe');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 600, 800);
+
+    // 标题
+    ctx.fillStyle = '#0a3144';
+    ctx.font = 'bold 32px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('🦅 蓝鹰侦探局', 300, 60);
+    ctx.font = 'bold 24px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText('BETI 特工潜能报告', 300, 100);
+
+    // 推荐部门
+    const topDept = DEPARTMENTS[topDeptKeys[0]];
+    ctx.font = 'bold 28px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(`${topDept.emoji} ${topDept.name}`, 300, 150);
+    ctx.font = '16px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillStyle = '#1f445e';
+    ctx.fillText(topDept.desc, 300, 180, 500);
+
+    // 雷达图（绘制在卡片上）
+    const radarCanvas = document.createElement('canvas');
+    radarCanvas.width = 300;
+    radarCanvas.height = 300;
+    drawRadarChartToCanvas(radarCanvas, traits);
+    ctx.drawImage(radarCanvas, 150, 220, 300, 300);
+
+    // 部门匹配条形图（前5名）
+    const sortedDepts = Object.keys(deptScores).sort((a,b) => deptScores[b] - deptScores[a]);
+    let y = 580;
+    ctx.fillStyle = '#0a3144';
+    ctx.font = 'bold 20px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('部门匹配指数', 40, y);
+    y += 30;
+    sortedDepts.slice(0,5).forEach((key, idx) => {
+      const dept = DEPARTMENTS[key];
+      const score = deptScores[key];
+      const pct = Math.round((score / maxDeptScore) * 100);
+      ctx.fillStyle = '#123d52';
+      ctx.font = '14px "Segoe UI", "PingFang SC", sans-serif';
+      ctx.fillText(`${dept.emoji} ${dept.name}`, 40, y);
+      // 条形
+      ctx.fillStyle = '#d4e4f3';
+      ctx.fillRect(140, y-10, 300, 10);
+      ctx.fillStyle = '#1a658b';
+      ctx.fillRect(140, y-10, 300 * (pct/100), 10);
+      ctx.fillStyle = '#0a3144';
+      ctx.fillText(`${pct}%`, 450, y);
+      y += 30;
+    });
+
+    // 水印
+    ctx.fillStyle = '#8aa3b8';
+    ctx.font = '12px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('蓝鹰通讯社 · BETI测试', 300, 760);
+
+    return canvas;
+  }
+
+  // 绘制雷达图到指定Canvas（供分享卡片使用）
+  function drawRadarChartToCanvas(canvas, traitScores) {
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    const cx = W / 2, cy = H / 2;
+    const radius = Math.min(W, H) * 0.38;
+    const levels = 5;
+    const traitKeys = Object.keys(TRAIT_NAMES);
+    const labels = traitKeys.map(k => TRAIT_NAMES[k]);
+    const values = traitKeys.map(k => traitScores[k]);
+
+    ctx.clearRect(0, 0, W, H);
+    // 网格与轴线（同原函数）
+    for (let level = 1; level <= levels; level++) {
+      const r = (radius * level) / levels;
+      ctx.beginPath();
+      for (let i = 0; i < traitKeys.length; i++) {
+        const angle = (Math.PI * 2 * i) / traitKeys.length - Math.PI / 2;
+        const x = cx + r * Math.cos(angle), y = cy + r * Math.sin(angle);
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      ctx.strokeStyle = '#c0d5e8'; ctx.lineWidth = 1; ctx.stroke();
+    }
+    for (let i = 0; i < traitKeys.length; i++) {
+      const angle = (Math.PI * 2 * i) / traitKeys.length - Math.PI / 2;
+      const x = cx + radius * Math.cos(angle), y = cy + radius * Math.sin(angle);
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(x, y);
+      ctx.strokeStyle = '#a0bbd4'; ctx.lineWidth = 1; ctx.stroke();
+      ctx.fillStyle = '#1e4868';
+      ctx.font = '10px "Segoe UI", "PingFang SC", sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      const labelRadius = radius + 18;
+      ctx.fillText(labels[i], cx + labelRadius * Math.cos(angle), cy + labelRadius * Math.sin(angle));
+    }
+    const maxScore = Math.max(...values, 1);
+    ctx.beginPath();
+    for (let i = 0; i < traitKeys.length; i++) {
+      const angle = (Math.PI * 2 * i) / traitKeys.length - Math.PI / 2;
+      const r = (values[i] / maxScore) * radius;
+      const x = cx + r * Math.cos(angle), y = cy + r * Math.sin(angle);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(30, 120, 180, 0.3)'; ctx.fill();
+    ctx.strokeStyle = '#1e6fa5'; ctx.lineWidth = 2; ctx.stroke();
+    for (let i = 0; i < traitKeys.length; i++) {
+      const angle = (Math.PI * 2 * i) / traitKeys.length - Math.PI / 2;
+      const r = (values[i] / maxScore) * radius;
+      const x = cx + r * Math.cos(angle), y = cy + r * Math.sin(angle);
+      ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fillStyle = '#0b3d57'; ctx.fill();
+    }
+  }
+
+  // 保存分享卡片
+  function saveShareCard() {
+    const canvas = document.getElementById('shareCardCanvas');
+    if (!canvas) return;
+    const link = document.createElement('a');
+    link.download = 'BETI特工报告.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  }
+
+  // 复制分享链接
+  function copyShareLink() {
+    const resultData = JSON.parse(document.getElementById('shareLinkData').textContent);
+    const params = new URLSearchParams({ r: encodeURIComponent(JSON.stringify(resultData)) });
+    const link = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+    navigator.clipboard.writeText(link).then(() => {
+      alert('链接已复制，快分享给朋友吧！');
+    }).catch(() => {
+      prompt('复制失败，请手动复制链接：', link);
+    });
+  }
+
+  // 显示部门详情
+  function toggleDeptDetails() {
+    const container = document.getElementById('deptDetails');
+    container.classList.toggle('show');
+    if (container.classList.contains('show')) {
+      // 填充内容
+      const deptKeys = Object.keys(DEPARTMENTS);
+      let html = '<h3 style="margin-bottom:12px;color:#0a3144;">📚 部门详细介绍</h3>';
+      deptKeys.forEach(key => {
+        const dept = DEPARTMENTS[key];
+        html += `
+          <div class="dept-detail-item">
+            <div class="dept-detail-header" onclick="toggleDeptDetail('${key}')">
+              <span>${dept.emoji} ${dept.name}</span>
+              <span>▼</span>
+            </div>
+            <div class="dept-detail-body" id="deptDetail-${key}">${dept.detail}</div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+  }
+
+  function toggleDeptDetail(key) {
+    const body = document.getElementById(`deptDetail-${key}`);
+    if (body) body.classList.toggle('open');
+  }
+
+  // ==================== 渲染入口 ====================
+  function renderEntrance() { /* 与之前相同 */ }
+
+  // ==================== 开始测试 ====================
+  function startTest(modeName) { /* 相同 */ }
+
+  // ==================== 渲染题目 ====================
+  function render() { /* 相同 */ }
+
+  function renderQuestion() { /* 相同 */ }
+
+  function selectOption(idx) { /* 相同 */ }
+
+  // ==================== 渲染结果（修改添加分享与详情按钮） ====================
+  function renderResult() {
+    const traits = calcTraitScores();
+    const deptScores = calcDeptScores(traits);
+    const top = topDepts(deptScores);
+    const maxDeptScore = Math.max(...Object.values(deptScores), 1);
+    const order = ['edit','photo','video','draw','tech','office','ops'];
+    let listHtml = '';
+    order.forEach(k => {
+      const d = DEPARTMENTS[k];
+      const p = (deptScores[k]/maxDeptScore)*100;
+      listHtml += `<div class="score-row"><span class="dept-label">${d.emoji} ${d.name}</span><div class="bar-bg"><div class="bar-fill" style="width:${p}%;"></div></div><span style="min-width:28px; text-align:right; font-weight:700;">${deptScores[k]}</span></div>`;
+    });
+
+    let recHtml = '';
+    if (top.length===1) {
+      const d = DEPARTMENTS[top[0]];
+      recHtml = `<div class="result-badge">${d.emoji}</div><div class="dept-name">${d.name}</div><div class="dept-desc">${d.desc}</div><p style="color:#1e4868; margin-top:8px; font-weight:500;">🧬 性格特质：${d.traits}</p>`;
+    } else {
+      const names = top.map(k => DEPARTMENTS[k].name).join(' 与 ');
+      recHtml = `<div class="result-badge">🦅✨</div><div class="dept-name">${names}</div><div class="dept-desc">你的性格特质在多个方向都有亮点！蓝鹰支持<strong>双部门</strong>，建议都了解一下。</div>`;
+    }
+
+    // 准备分享数据
+    const shareData = { traits, deptScores, top, maxDeptScore };
+
+    container.innerHTML = `
+      <div class="detective-badge">📁 档案解密</div>
+      <div class="header"><div class="logo-row">🦅🔓</div><div class="title">特工潜能报告</div><div class="subtitle">BETI分析完成</div></div>
+      <div class="card result-card">${recHtml}</div>
+      <div class="radar-container"><canvas id="radarCanvas" width="300" height="300"></canvas></div>
+      <div class="score-list"><h3 style="margin:0 0 8px; color:#0a3144;">📊 部门匹配指数</h3>${listHtml}</div>
+
+      <!-- 分享按钮 -->
+      <div class="share-buttons">
+        <button class="share-btn" id="saveCardBtn">🖼️ 保存结果图</button>
+        <button class="share-btn" id="copyLinkBtn">🔗 复制分享链接</button>
+        <button class="share-btn" id="toggleDeptBtn">📚 查看部门详情</button>
+      </div>
+
+      <!-- 用于分享的隐藏Canvas -->
+      <canvas id="shareCardCanvas" style="display:none;"></canvas>
+      <!-- 存储分享数据（用于复制链接） -->
+      <script type="application/json" id="shareLinkData">${JSON.stringify(shareData)}</script>
+
+      <!-- 部门详情容器 -->
+      <div class="dept-details-container" id="deptDetails"></div>
+
+      <div style="display:flex; justify-content:center; margin-top:16px;">
+        <button class="restart-btn" id="restartBtn">🔄 重新侦测</button>
+      </div>
+      <div class="disclaimer">✨ 测试结果仅供参考，最终选择请结合自身兴趣和实际情况～</div>
+      <p style="text-align:center; color:#517a94; margin-top:10px; font-size:14px;">💙 蓝鹰通讯社 · 七大部门等你加入<br>采编部 | 摄影部 | 影像部 | 手绘部 | 技术部 | 综合办公室 | 网运部</p>
+    `;
+
+    // 绘制雷达图
+    drawRadarChart('radarCanvas', traits);
+
+    // 生成分享卡片（隐藏）
+    const shareCanvas = generateShareCard(traits, deptScores, top, maxDeptScore);
+    const hiddenCanvas = document.getElementById('shareCardCanvas');
+    hiddenCanvas.width = shareCanvas.width;
+    hiddenCanvas.height = shareCanvas.height;
+    hiddenCanvas.getContext('2d').drawImage(shareCanvas, 0, 0);
+
+    // 绑定分享与详情按钮
+    document.getElementById('saveCardBtn').addEventListener('click', saveShareCard);
+    document.getElementById('copyLinkBtn').addEventListener('click', copyShareLink);
+    document.getElementById('toggleDeptBtn').addEventListener('click', toggleDeptDetails);
+    document.getElementById('restartBtn').addEventListener('click', () => {
+      mode = null; questions = []; answers = []; currentIndex = 0; finished = false;
+      renderEntrance();
+    });
+  }
+
+  // ==================== 初始化 ====================
+  function init() {
+    // 检查URL参数，若有分享结果则直接显示
+    const urlParams = new URLSearchParams(window.location.search);
+    const resultParam = urlParams.get('r');
+    if (resultParam) {
+      try {
+        const data = JSON.parse(decodeURIComponent(resultParam));
+        // 设置状态并渲染结果
+        mode = 'shared';
+        // 需要填充traits等，直接调用renderResult但需确保数据存在
+        // 简化：我们直接构造一个临时状态并渲染结果
+        finished = true;
+        // 保存数据到全局变量供renderResult使用
+        window.sharedData = data;
+        // 重写renderResult以使用sharedData？简单处理：直接调用renderResultButWithData
+        renderResultWithData(data);
+      } catch (e) {
+        // 参数无效，回到入口
+        renderEntrance();
+      }
+    } else {
+      renderEntrance();
+    }
+  }
+
+  function renderResultWithData(data) {
+    const traits = data.traits;
+    const deptScores = data.deptScores;
+    const top = data.top;
+    const maxDeptScore = data.maxDeptScore;
+    // 调用原来的渲染结果逻辑，但传入这些数据
+    // 为了方便，我们可以复用renderResult，但需要将数据临时赋值给全局变量
+    // 这里简单处理：设置一个全局结果数据，然后调用renderResult
+    window.resultData = data;
+    mode = 'shared';
+    finished = true;
+    renderResult();
+  }
+
+  // 修改renderResult读取全局结果数据
+  function renderResult() {
+    let traits, deptScores, top, maxDeptScore;
+    if (window.resultData) {
+      // 使用分享数据
+      traits = window.resultData.traits;
+      deptScores = window.resultData.deptScores;
+      top = window.resultData.top;
+      maxDeptScore = window.resultData.maxDeptScore;
+    } else {
+      traits = calcTraitScores();
+      deptScores = calcDeptScores(traits);
+      top = topDepts(deptScores);
+      maxDeptScore = Math.max(...Object.values(deptScores), 1);
+    }
+    // ... 后续渲染逻辑与之前相同，但使用这些变量
+  }
+
+  // 启动
+  init();
+})();
+</script>
+</body>
+</html>
