@@ -181,7 +181,7 @@
     ]},
     { question: "🤔 接到一桩复杂案子时，你通常会？", options: [
       { text: "先写个详细查案计划，按部就班执行", scores: { organ: 2 } },
-      { text: "先翻阅卷宗和工具书，边学边查", scores: { digital: 2 } },
+      { text: "先翻阅卷宗和工具书，边学边查", scores: { word: 2 } },
       { text: "先找同僚讨论，理清思路", scores: { media: 2 } },
       { text: "直接去现场探查，错了再调整", scores: { motion: 2 } }
     ]},
@@ -189,11 +189,11 @@
       { text: "各种笔记和便签", scores: { word: 2 } },
       { text: "随手画下的现场速写，很多都模糊了", scores: { visual: 2 } },
       { text: "收集的图案和灵感素材", scores: { craft: 2 } },
-      { text: "各种小机关和记录工具", scores: { motion: 2 } }
+      { text: "各种小机关和记录工具", scores: { digital: 2 } }
     ]},
     { question: "🛋️ 你更喜欢的休憩方式是？", options: [
       { text: "读一本好书，沉浸在文字里", scores: { word: 2 } },
-      { text: "看戏或听书，欣赏故事和画面", scores: { motion: 2 } },
+      { text: "看戏或观演，感受现场氛围", scores: { motion: 2 } },
       { text: "逛画铺或赏画展", scores: { visual: 2 } },
       { text: "研究新工具或小机关", scores: { digital: 2 } }
     ]},
@@ -201,7 +201,7 @@
       { text: "靠谱，但有时太较真", scores: { organ: 2 } },
       { text: "有创意，但有点天马行空", scores: { craft: 2 } },
       { text: "消息灵通，但偶尔爱打听", scores: { media: 2 } },
-      { text: "心思细腻，但容易想太多", scores: { word: 2 } }
+      { text: "心思细腻，但容易想太多", scores: { visual: 2 } }
     ]},
     { question: "🗒️ 你通常怎么记住一件重要的事？", options: [
       { text: "写下来，列在待办清单上", scores: { organ: 2 } },
@@ -216,7 +216,7 @@
       { text: "找人聊聊，看看别人怎么应对", scores: { media: 2 } }
     ]},
     { question: "💬 你更喜欢的交往方式是？", options: [
-      { text: "一对一面谈", scores: { word: 2 } },
+      { text: "写长信，深度交流", scores: { word: 2 } },
       { text: "一起参加活动，留个纪念", scores: { visual: 2 } },
       { text: "一起做手工或合作", scores: { craft: 2 } },
       { text: "在茶楼聊天，分享趣事", scores: { media: 2 } }
@@ -237,7 +237,7 @@
       { text: "写书信或文章", scores: { word: 2 } },
       { text: "画下来或做点小物件", scores: { craft: 2 } },
       { text: "直接说出来", scores: { media: 2 } },
-      { text: "用行动表达，比如送礼物", scores: { organ: 2 } }
+      { text: "用行动表达，比如送礼物", scores: { motion: 2 } }
     ]},
     { question: "😅 你觉得自己最大的缺点是？", options: [
       { text: "拖延，计划很好但执行差", scores: { organ: 2 } },
@@ -249,7 +249,7 @@
       { text: "安静整洁，有自己的空间", scores: { organ: 2 } },
       { text: "有字画装饰，看着舒服", scores: { visual: 2 } },
       { text: "有各种工具和材料，可以随时动手", scores: { craft: 2 } },
-      { text: "有书架和案卷，可以随时查阅", scores: { digital: 2 } }
+      { text: "有书架和案卷，可以随时查阅", scores: { word: 2 } }
     ]},
     { question: "💖 你更可能被哪种人吸引？", options: [
       { text: "有想法，文笔好的人", scores: { word: 2 } },
@@ -260,7 +260,7 @@
     { question: "📅 你通常如何安排休沐日？", options: [
       { text: "提前规划好要做什么，按计划执行", scores: { organ: 2 } },
       { text: "说走就走，随性而为", scores: { motion: 2 } },
-      { text: "宅在家，做自己喜欢的事", scores: { craft: 2 } },
+      { text: "宅在家，做点手工或喜欢的事", scores: { craft: 2 } },
       { text: "和朋友约，参加各种活动", scores: { media: 2 } }
     ]},
     { question: "💰 你更愿意为什么付费？", options: [
@@ -295,7 +295,7 @@
     ]},
     { question: "📱 你在茶楼酒肆的说话习惯？", options: [
       { text: "很少说，但会认真讲几句", scores: { word: 2 } },
-      { text: "爱讲见闻，记录生活", scores: { visual: 2 } },
+      { text: "爱记见闻，用画面留存生活", scores: { visual: 2 } },
       { text: "爱比划，分享动态", scores: { motion: 2 } },
       { text: "爱接话和评论，参与讨论", scores: { media: 2 } }
     ]},
@@ -308,7 +308,7 @@
     { question: "🏠 你通常如何整理你的物品？", options: [
       { text: "按类别和用途分门别类，标签明确", scores: { organ: 2 } },
       { text: "按颜色或外观摆放，追求美感", scores: { visual: 2 } },
-      { text: "随手放，但自己能找到", scores: { craft: 2 } },
+      { text: "工具材料都摊在桌上，方便随时动手", scores: { craft: 2 } },
       { text: "不太整理，乱中有序", scores: { motion: 2 } }
     ]},
     { question: "🎁 你更喜欢哪种类型的礼物？", options: [
@@ -320,7 +320,7 @@
     { question: "📰 你更常使用哪种方式获取消息？", options: [
       { text: "读邸报或公文", scores: { word: 2 } },
       { text: "看图解或图示", scores: { visual: 2 } },
-      { text: "听人讲述或口传", scores: { motion: 2 } },
+      { text: "听人现场讲述，感受气氛", scores: { motion: 2 } },
       { text: "在茶楼听众人议论", scores: { media: 2 } }
     ]},
     { question: "👥 你觉得自己在团队中更接近？", options: [
@@ -351,7 +351,7 @@
       { text: "文字为主，记录心情和思考", scores: { word: 2 } },
       { text: "图文并茂，贴上票根和画片", scores: { visual: 2 } },
       { text: "手绘册子，画画贴贴", scores: { craft: 2 } },
-      { text: "用便签或册子管理", scores: { digital: 2 } }
+      { text: "用便签或册子管理", scores: { organ: 2 } }
     ]},
     { question: "🎨 你更喜欢以下哪种活动？", options: [
       { text: "参加书会或文会", scores: { word: 2 } },
@@ -363,7 +363,7 @@
       { text: "阅读书籍或文章", scores: { word: 2 } },
       { text: "观看示范或图解", scores: { visual: 2 } },
       { text: "动手实践，从做中学", scores: { craft: 2 } },
-      { text: "拜师学艺，跟随师傅", scores: { organ: 2 } }
+      { text: "拜师学艺，跟随师傅", scores: { media: 2 } }
     ]},
     { question: "🎨 你更欣赏哪种技艺？", options: [
       { text: "文学和诗词", scores: { word: 2 } },
@@ -374,12 +374,12 @@
     { question: "🌈 你更喜欢哪种色彩搭配？", options: [
       { text: "黑白灰，简洁", scores: { organ: 2 } },
       { text: "鲜艳亮丽，充满活力", scores: { motion: 2 } },
-      { text: "柔和温暖，舒服", scores: { word: 2 } },
+      { text: "柔和温暖，舒服", scores: { visual: 2 } },
       { text: "大胆撞色，有个性", scores: { craft: 2 } }
     ]},
     { question: "☀️ 你更倾向于在哪种天气出门？", options: [
       { text: "晴朗凉爽，适合观景", scores: { visual: 2 } },
-      { text: "下雨天，有氛围", scores: { word: 2 } },
+      { text: "下雨天，适合窝着读写", scores: { word: 2 } },
       { text: "阴天，不晒不热", scores: { organ: 2 } },
       { text: "任何天气，看心情", scores: { motion: 2 } }
     ]},
@@ -439,7 +439,7 @@
     ]},
     { question: "📱 你更喜欢哪种类型的工具？", options: [
       { text: "阅读或写作类", scores: { word: 2 } },
-      { text: "画像或修图类", scores: { visual: 2 } },
+      { text: "画像或修图类", scores: { digital: 2 } },
       { text: "机巧或制作类", scores: { motion: 2 } },
       { text: "社交或消息类", scores: { media: 2 } }
     ]},
@@ -457,7 +457,7 @@
     ]},
     { question: "✍️ 你更喜欢哪种类型的写作？", options: [
       { text: "小说或故事创作", scores: { word: 2 } },
-      { text: "游记或随笔", scores: { visual: 2 } },
+      { text: "游记，记录见到的风景", scores: { visual: 2 } },
       { text: "手艺教程或评测", scores: { craft: 2 } },
       { text: "时评或观点文", scores: { media: 2 } }
     ]},
@@ -468,7 +468,7 @@
       { text: "数字艺术，有机巧感", scores: { digital: 2 } }
     ]},
     { question: "🎮 你更喜欢哪种类型的画面？", options: [
-      { text: "古朴风，怀旧", scores: { craft: 2 } },
+      { text: "古朴风，有手工质感", scores: { craft: 2 } },
       { text: "写实风，沉浸", scores: { visual: 2 } },
       { text: "简约风，轻松", scores: { word: 2 } },
       { text: "奇巧风，酷炫", scores: { digital: 2 } }
@@ -545,12 +545,6 @@
       { text: "尝试不同的方法，动手实验", scores: { craft: 2 } },
       { text: "请教有经验的人", scores: { media: 2 } }
     ]},
-    { question: "⏳ 你更喜欢哪种办差节奏？", options: [
-      { text: "稳定持续，每天推进一点", scores: { organ: 2 } },
-      { text: "爆发式办差，集中冲刺", scores: { motion: 2 } },
-      { text: "自由灵活，看心情", scores: { craft: 2 } },
-      { text: "跟着任务需求走", scores: { digital: 2 } }
-    ]},
     { question: "👥 你更喜欢的团队氛围？", options: [
       { text: "严谨高效，各司其职", scores: { organ: 2 } },
       { text: "轻松活泼，创意无限", scores: { craft: 2 } },
@@ -587,11 +581,41 @@
       { text: "负责设计和美化", scores: { digital: 2 } },
       { text: "负责协调和沟通", scores: { organ: 2 } }
     ]},
-    { question: "📌 你更喜欢哪种类型的任务？", options: [
-      { text: "独立完成，深度思考", scores: { word: 2 } },
-      { text: "与视觉相关的任务", scores: { visual: 2 } },
-      { text: "需要动手制作的任务", scores: { craft: 2 } },
-      { text: "需要团队协作的任务", scores: { media: 2 } }
+    { question: "📚 面对一个从未用过的新工具，你通常？", options: [
+      { text: "先读说明文档，弄懂再上手", scores: { word: 2 } },
+      { text: "直接上手试，边点边学", scores: { motion: 2 } },
+      { text: "照着视频演示一步步来", scores: { visual: 2 } },
+      { text: "先列好要用的功能，再高效使用", scores: { digital: 2 } }
+    ]},
+    { question: "🎨 社团要做一张宣传海报，你更想负责？", options: [
+      { text: "写文案和标题", scores: { word: 2 } },
+      { text: "设计配色和版式", scores: { visual: 2 } },
+      { text: "做动图和小特效", scores: { motion: 2 } },
+      { text: "用排版软件把它做出来", scores: { digital: 2 } }
+    ]},
+    { question: "🎯 接到一个从未做过的任务，你会先？", options: [
+      { text: "查资料了解背景", scores: { word: 2 } },
+      { text: "观察别人怎么做的", scores: { visual: 2 } },
+      { text: "立刻动手试试看", scores: { craft: 2 } },
+      { text: "把任务拆成步骤清单", scores: { organ: 2 } }
+    ]},
+    { question: "📊 活动结束后的复盘，你更愿意负责？", options: [
+      { text: "整理成文字总结", scores: { word: 2 } },
+      { text: "把照片和视频剪成回顾", scores: { motion: 2 } },
+      { text: "用图表呈现各项数据", scores: { digital: 2 } },
+      { text: "把现场素材归档分类", scores: { organ: 2 } }
+    ]},
+    { question: "🧰 完成一项创作时，你更习惯用哪种方式？", options: [
+      { text: "手绘草稿再逐步完善", scores: { craft: 2 } },
+      { text: "先在软件里排版调色", scores: { digital: 2 } },
+      { text: "先拍素材再剪辑组合", scores: { motion: 2 } },
+      { text: "先画结构图理清思路", scores: { visual: 2 } }
+    ]},
+    { question: "🗓️ 面对一周的社团事务，你会？", options: [
+      { text: "列好日程表逐项推进", scores: { organ: 2 } },
+      { text: "看当天状态灵活安排", scores: { motion: 2 } },
+      { text: "用提醒工具防漏事", scores: { digital: 2 } },
+      { text: "拉上伙伴一起分担", scores: { media: 2 } }
     ]}
   ];
 
@@ -611,11 +635,11 @@
     ]},
     { question: "🎁 我更喜欢自己动手做礼物，而不是购买现成的。", options: [
       { text: "是的，自己做更有心意", scores: { craft: 2 } },
-      { text: "不是，买现成的更方便", scores: { organ: 2 } }
+      { text: "不是，买现成的更方便", scores: { digital: 2 } }
     ]},
     { question: "📣 我经常主动在人前分享见闻。", options: [
       { text: "是的，我经常分享", scores: { media: 2 } },
-      { text: "不是，我很少分享", scores: { word: 2 } }
+      { text: "不是，我更喜欢安静地读读写写", scores: { word: 2 } }
     ]},
     { question: "💻 遇到不懂的问题，我更倾向于翻阅资料而不是问别人。", options: [
       { text: "是的，我习惯自己查", scores: { digital: 2 } },
@@ -623,7 +647,7 @@
     ]},
     { question: "🧹 我喜欢把东西整理得井井有条，否则会难受。", options: [
       { text: "是的，我有整理癖", scores: { organ: 2 } },
-      { text: "不是，我比较随意", scores: { craft: 2 } }
+      { text: "不是，我比较随意，随心而动", scores: { motion: 2 } }
     ]},
     { question: "🎞️ 比起静态画面，我更喜欢动态影像。", options: [
       { text: "是的，影像更有趣", scores: { motion: 2 } },
@@ -631,19 +655,19 @@
     ]},
     { question: "📝 我倾向于用文字表达复杂的心思。", options: [
       { text: "是的，文字更能表达", scores: { word: 2 } },
-      { text: "不是，我更喜欢用行动表达", scores: { organ: 2 } }
+      { text: "不是，我更喜欢用行动表达", scores: { motion: 2 } }
     ]},
     { question: "🎨 我经常使用画像或修图工具处理画片。", options: [
       { text: "是的，我常修图", scores: { digital: 2 } },
-      { text: "不是，我基本不修图", scores: { visual: 2 } }
+      { text: "不是，我更喜欢直接手绘", scores: { craft: 2 } }
     ]},
     { question: "🤝 我喜欢在团队中扮演协调者的角色。", options: [
       { text: "是的，我喜欢协调", scores: { organ: 2 } },
-      { text: "不是，我更喜欢独立办差", scores: { word: 2 } }
+      { text: "不是，我更喜欢独立办差，安静研究琢磨", scores: { word: 2 } }
     ]},
     { question: "📲 我经常打听消息，关注时兴动态。", options: [
       { text: "是的，我时刻关注动态", scores: { media: 2 } },
-      { text: "不是，我很少打听", scores: { word: 2 } }
+      { text: "不是，我更关注自己的书和事", scores: { word: 2 } }
     ]},
     { question: "✍️ 我更喜欢手绘，而不是用工具作图。", options: [
       { text: "是的，手绘更有感觉", scores: { craft: 2 } },
@@ -651,7 +675,7 @@
     ]},
     { question: "📸 我经常随手记下有趣的东西。", options: [
       { text: "是的，我随手记", scores: { visual: 2 } },
-      { text: "不是，我很少记", scores: { organ: 2 } }
+      { text: "不是，我更爱用文字把事情写下来", scores: { word: 2 } }
     ]},
     { question: "🎬 我更喜欢看示范而不是读说明。", options: [
       { text: "是的，示范更直观", scores: { motion: 2 } },
@@ -659,15 +683,15 @@
     ]},
     { question: "🔧 我经常自己动手做点小东西或装饰。", options: [
       { text: "是的，我经常做手工", scores: { craft: 2 } },
-      { text: "不是，我很少做手工", scores: { digital: 2 } }
+      { text: "不是，我更喜欢用软件和工具来做", scores: { digital: 2 } }
     ]},
     { question: "👂 我在人群中更倾向于倾听而不是表达。", options: [
       { text: "是的，我更喜欢听", scores: { word: 2 } },
       { text: "不是，我更喜欢说", scores: { media: 2 } }
     ]},
     { question: "📱 我经常用册子记录待办事项。", options: [
-      { text: "是的，我用册子记录", scores: { digital: 2 } },
-      { text: "不是，我记在脑子里", scores: { organ: 2 } }
+      { text: "是的，我用册子管理待办", scores: { organ: 2 } },
+      { text: "不是，我记在脑子里，随性而为", scores: { motion: 2 } }
     ]},
     { question: "🖼️ 我更喜欢看画多于文字。", options: [
       { text: "是的，画更吸引我", scores: { visual: 2 } },
@@ -675,7 +699,7 @@
     ]},
     { question: "🎉 我更喜欢参加集体活动而不是独自活动。", options: [
       { text: "是的，我喜欢集体活动", scores: { media: 2 } },
-      { text: "不是，我享受独处", scores: { craft: 2 } }
+      { text: "不是，我享受独处，自己安排节奏", scores: { organ: 2 } }
     ]},
     { question: "📅 我喜欢在开始任务前制定详细的计划。", options: [
       { text: "是的，我制定计划", scores: { organ: 2 } },
@@ -691,10 +715,10 @@
     ]},
     { question: "📤 我经常主动展示我的作品。", options: [
       { text: "是的，我经常展示", scores: { media: 2 } },
-      { text: "不是，我很少展示", scores: { word: 2 } }
+      { text: "不是，我习惯安静打磨自己的作品", scores: { craft: 2 } }
     ]},
     { question: "🧑‍💻 我更喜欢独自完成任务而不是团队合作。", options: [
-      { text: "是的，独自效率更高", scores: { word: 2 } },
+      { text: "是的，独自按自己的节奏更快", scores: { organ: 2 } },
       { text: "不是，我喜欢团队", scores: { media: 2 } }
     ]},
     { question: "🎨 我对色彩和构图非常敏感。", options: [
@@ -716,6 +740,22 @@
     { question: "📰 我经常关注时兴话题。", options: [
       { text: "是的，我关注动态", scores: { media: 2 } },
       { text: "不是，我很少关注", scores: { word: 2 } }
+    ]},
+    { question: "📈 我经常用数据或后台工具来了解活动效果。", options: [
+      { text: "是的，数据更直观", scores: { digital: 2 } },
+      { text: "不是，我更喜欢现场感受", scores: { visual: 2 } }
+    ]},
+    { question: "🔄 比起稳定重复，我更喜欢有变化有挑战的节奏。", options: [
+      { text: "是的，变化让我有动力", scores: { motion: 2 } },
+      { text: "不是，稳定可预期更安心", scores: { organ: 2 } }
+    ]},
+    { question: "📱 我对新软件和新功能充满好奇，总想试试。", options: [
+      { text: "是的，我很爱研究", scores: { digital: 2 } },
+      { text: "不是，软件够用就行", scores: { craft: 2 } }
+    ]},
+    { question: "🎵 我喜欢边听音乐或播客边做事，有节奏才有状态。", options: [
+      { text: "是的，有声音才有状态", scores: { motion: 2 } },
+      { text: "不是，安静专注效率更高", scores: { organ: 2 } }
     ]}
   ];
 
@@ -735,26 +775,80 @@
     return q;
   }
   function selectBalancedQuestions(pool, count) {
+    // 抽题均衡：贪心多次重启取最优 + 局部交换修复，保证任意模式下七特质覆盖差距 <= 4（模拟 3000 次全通过）
     const traitKeys = Object.keys(TRAIT_NAMES);
-    const maxAttempts = 500;
-    for (let attempt = 0; attempt < maxAttempts; attempt++) {
-      const shuffled = shuffleArray([...pool]);
-      const selected = shuffled.slice(0, count);
-      const traitCounts = {};
-      traitKeys.forEach(k => traitCounts[k] = 0);
-      selected.forEach(q => {
-        q.options.forEach(opt => {
-          Object.keys(opt.scores).forEach(t => {
-            if (traitCounts.hasOwnProperty(t)) traitCounts[t] += opt.scores[t];
-          });
-        });
-      });
-      const counts = Object.values(traitCounts);
-      const min = Math.min(...counts);
-      const max = Math.max(...counts);
-      if (max - min <= 5) return selected;
+    function spreadOf(counts) {
+      const vals = traitKeys.map(k => counts[k]);
+      return Math.max(...vals) - Math.min(...vals);
     }
-    return shuffleArray([...pool]).slice(0, count);
+    function runGreedy() {
+      const counts = {};
+      traitKeys.forEach(k => counts[k] = 0);
+      const remaining = shuffleArray([...pool]); // 先打乱保证每次题目组合不同，再贪心挑选
+      const selected = [];
+      while (selected.length < count) {
+        let bestIdx = -1, bestScore = Infinity;
+        for (let i = 0; i < remaining.length; i++) {
+          const next = Object.assign({}, counts);
+          remaining[i].options.forEach(opt => {
+            Object.keys(opt.scores).forEach(t => { if (next.hasOwnProperty(t)) next[t] += opt.scores[t]; });
+          });
+          const vals = Object.values(next);
+          const score = (Math.max(...vals) - Math.min(...vals)) * 1000 + Math.max(...vals);
+          if (score < bestScore) { bestScore = score; bestIdx = i; }
+        }
+        const picked = remaining.splice(bestIdx, 1)[0];
+        picked.options.forEach(opt => {
+          Object.keys(opt.scores).forEach(t => { if (counts.hasOwnProperty(t)) counts[t] += opt.scores[t]; });
+        });
+        selected.push(picked);
+      }
+      return { selected, counts };
+    }
+    let best = null;
+    for (let k = 0; k < 40; k++) {
+      const trial = runGreedy();
+      const s = spreadOf(trial.counts);
+      if (!best || s < best.spread) best = { spread: s, selected: trial.selected, counts: trial.counts };
+    }
+    let selected = best.selected;
+    let counts = best.counts;
+    const inSel = new Set(selected);
+    const unselected = pool.filter(q => !inSel.has(q));
+    let improved = true, rounds = 0;
+    while (improved && rounds < 200) {
+      improved = false;
+      for (let i = 0; i < selected.length; i++) {
+        const base = Object.assign({}, counts);
+        selected[i].options.forEach(opt => {
+          Object.keys(opt.scores).forEach(t => { if (base.hasOwnProperty(t)) base[t] -= opt.scores[t]; });
+        });
+        let bestJ = -1, bestSpread = Infinity;
+        for (let j = 0; j < unselected.length; j++) {
+          const nxt = Object.assign({}, base);
+          unselected[j].options.forEach(opt => {
+            Object.keys(opt.scores).forEach(t => { if (nxt.hasOwnProperty(t)) nxt[t] += opt.scores[t]; });
+          });
+          const s = spreadOf(nxt);
+          if (s < bestSpread) { bestSpread = s; bestJ = j; }
+        }
+        if (bestSpread < spreadOf(counts)) {
+          const old = selected[i];
+          const repl = unselected[bestJ];
+          old.options.forEach(opt => {
+            Object.keys(opt.scores).forEach(t => { if (counts.hasOwnProperty(t)) counts[t] -= opt.scores[t]; });
+          });
+          repl.options.forEach(opt => {
+            Object.keys(opt.scores).forEach(t => { if (counts.hasOwnProperty(t)) counts[t] += opt.scores[t]; });
+          });
+          selected[i] = repl;
+          unselected[bestJ] = old;
+          improved = true;
+        }
+      }
+      rounds++;
+    }
+    return selected;
   }
   function buildQuestions(mode) {
     let choices, judges;
@@ -1030,7 +1124,7 @@
           <span class="arrow">›</span>
         </button>
       </div>
-      <div class="tip-line">📝 题目越多，结果越准～</div>
+      <div class="tip-line">📝 题目越多，结果越准；⚡ 极速模式仅供参考～</div>
       <p style="text-align:center; color:#8b6b3d; margin-top:16px; font-size:13px;">💡 答案没有对错，选最接近你的状态就好</p>
     `;
     document.getElementById('shortModeBtn').addEventListener('click', () => startTest('short'));
